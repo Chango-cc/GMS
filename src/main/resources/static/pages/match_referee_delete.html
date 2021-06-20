@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <!--    <link rel="stylesheet" href="../css/main.css">-->
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/match_referee_delete.css">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="bg-white" style="padding: 10px 10px 10px 20px;">赛事管理>>裁判信息</div>
+<div class="content_body">
+    <div id="table_referee" class="table_body bg-white">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">姓名</th>
+                <th scope="col">类型</th>
+                <th scope="col">描述</th>
+                <th scope="col">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in list" :key="index" :content="item">
+                <th scope="row">{{index}}</th>
+                <td>{{item.refereeName}}</td>
+                <td>{{item.refereePhoto}}</td>
+                <td>{{item.refereeDescribe}}</td>
+                <td><span class="text_operate" @click="deleteConfirm(index)">delete</span></td>
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul id="ul_pages" class="pagination justify-content-end">
+                <li class="page-item" @click="previousPage()">
+                    <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)">
+                    <a class="page-link">{{index}}</a>
+                </li>
+                <li class="page-item" @click="nextPage()">
+                    <a class="page-link">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script type="text/javascript" src="../js/match_referee_delete.js"></script>
+
+</body>
+</html>

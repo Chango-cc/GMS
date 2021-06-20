@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/match_referee_new.css">
+    <title>Title</title>
+</head>
+<body>
+<div class="bg-white" style="padding: 10px 10px 10px 20px;">赛事管理>>裁判新建</div>
+<div class="content_body">
+    <div class="form_referee bg-white">
+        <h3>裁判信息</h3>
+        <hr>
+        <form id="form_referee">
+            <div class="option input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="label_key" id="basic-addon1">姓名:</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" v-model="username">
+
+            </div>
+            <div class="option input-group">
+                <div class="input-group-prepend">
+                    <span class="label_key">描述:</span>
+                </div>
+                <textarea class="form-control" aria-label="With textarea" v-model="description"></textarea>
+            </div>
+            <div class="option input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="label_key">类型:</span>
+                </div>
+                <div class="checkbox_type">
+                    <div class="custom-control custom-checkbox" v-for="(item,index) of list">
+                        <input type="checkbox" class="custom-control-input" :id="index" @click="CheckItem(item)">
+                        <label class="custom-control-label" :for="index">{{item.type}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-toolbar justify-content-end">
+                <button class="btn btn-primary" type="reset">reset</button>
+                <input class="btn btn-primary" type="button" value="submit" @click="submitInfo()">
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="../js/match_referee_new.js"></script>
+</body>
+</html>

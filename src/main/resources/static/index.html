@@ -22,7 +22,9 @@
             document.getElementById("right_body").onload=function (){
                 changeFrameHeight();
             }
-            document.getElementById("right_body").setAttribute("src","pages/match_query.html");
+            document.body.clientHeight
+            // document.getElementById("right_body").setAttribute("height",document.getElementById("sidebar").clientHeight);
+            document.getElementById("right_body").setAttribute("src","pages/match_censor.html");
         }
 
         function changeFrameHeight() {
@@ -71,7 +73,7 @@
         </header>
         <!-- Side-Nav-->
         <aside class="main-sidebar hidden-print">
-            <section class="sidebar">
+            <section id="sidebar" class="sidebar">
                 <div class="user-panel">
                     <div style="padding-left: 10px; color: whitesmoke">xxx,你好</div>
 <!--                    <div class="pull-left image"></div>-->
@@ -82,16 +84,21 @@
                 <!-- Sidebar Menu-->
                 <ul class="sidebar-menu" id="sidebar_menu">
                     <li class="active"><a href="index.html"><i class="fa fa-dashboard"></i><span>Home</span></a></li>
-                    <li class="treeview" v-for="(p_item,p_index) in parentMenu" :key="p_index" :content="p_item"><a href="#"><i class="fa fa-file-text"></i><span>{{p_item.p_name}}</span><i class="fa fa-angle-right"></i></a>
+<!--                    <li class="treeview" v-for="(p_item,p_index) in parentMenu" :key="p_index" :content="p_item"><a href="#"><i class="fa fa-file-text"></i><span>{{p_item.p_name}}</span><i class="fa fa-angle-right"></i></a>-->
+<!--                        <ul class="treeview-menu">-->
+<!--                            <li><a :href="c_item.url" target="right_body" v-for="(c_item,c_index) in p_item.childMenu" :key="c_index" :content="c_item"><i class="fa fa-circle-o"></i>{{c_item.c_name}}</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+                    <li class="treeview" v-for="(p_item,p_index) in menu" :key="p_index" :content="p_item"><a href="#"><i class="fa fa-file-text"></i><span>{{p_item.name}}</span><i class="fa fa-angle-right"></i></a>
                         <ul class="treeview-menu">
-                            <li><a :href="c_item.url" target="right_body" v-for="(c_item,c_index) in p_item.childMenu" :key="c_index" :content="c_item"><i class="fa fa-circle-o"></i>{{c_item.c_name}}</a></li>
+                            <li><a :href="c_item.url" target="right_body" v-for="(c_item,c_index) in p_item.list" :key="c_index" :content="c_item"><i class="fa fa-circle-o"></i>{{c_item.name}}</a></li>
                         </ul>
                     </li>
                 </ul>
             </section>
         </aside>
 
-        <div class="content-wrapper" style="padding: 0px;"><iframe id="right_body" name="right_body" width="100%" frameborder="0" scrolling="no" οnlοad="changeFrameHeight()"></iframe></div>
+        <div class="content-wrapper" style="padding: 0px;"><iframe id="right_body" name="right_body" width="100%" frameborder="0" scrolling="no" οnlοad="changeFrameHeight()" height="500px"></iframe></div>
     </div>
     <!-- Javascripts-->
     <script src="js/main.js"></script>

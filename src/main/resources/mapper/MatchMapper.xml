@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.gdou.matchmanage.dao.MatchDao">
+    <!--    <resultMap id="matchId" type="edu.gdou.matchmanage.bean.Match">-->
+    <!--        <result property="matchId" column="match_id"/>-->
+    <!--        <result property="matchName " column="match_name"/>-->
+    <!--        <result property="matchTime" column="match_time"/>-->
+    <!--        <result property="matchPlace " column="match_place"/>-->
+    <!--        <result property="matchTools " column="match_tools"/>-->
+    <!--        <result property="matchType " column="match_type"/>-->
+    <!--        <result property="matchDescribe " column="match_describe"/>-->
+    <!--        <result property="userId " column="user_id"/>-->
+    <!--        <result property="reviewerId " column="reviewer_id"/>-->
+    <!--        <result property="refereeId " column="referee_id"/>-->
+    <!--        <result property="status " column="status"/>-->
+    <!--    </resultMap>-->
+    <select id="queryMatchNum" resultType="int">
+        SELECT COUNT(*)
+        FROM gms.match;
+    </select>
+    <select id="queryMatch" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match;
+    </select>
+    <select id="queryMatchById" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match where match_id=#{id}
+    </select>
+    <select id="queryMatchByUser" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match where user_id=#{id}
+    </select>
+    <select id="queryMatchByStatus" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match where status=#{status}
+    </select>
+    <select id="queryMatchLimit" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match limit #{offset},#{length};
+    </select>
+    <insert id="addMatch" parameterType="edu.gdou.matchmanage.bean.Match">
+        insert into gms.match (match_name, match_time, match_place, match_tools, match_type, match_describe, user_id,
+                               reviewer_id, referee_id, status)
+            value (#{matchName},#{matchTime},#{matchPlace},#{matchTools},#{matchType},#{matchDescribe},#{userId},#{reviewerId},#{refereeId},#{status})
+    </insert>
+    <update id="updateMatch" parameterType="edu.gdou.matchmanage.bean.Match">
+        update gms.match
+        set match_name=#{matchName},
+            match_time=#{matchTime},
+            match_place=#{matchPlace},
+            match_tools=#{matchTools},
+            match_type=#{matchType},
+            match_describe=#{matchDescribe},
+            user_id=#{userId},
+            reviewer_id=#{reviewerId},
+            referee_id=#{refereeId},
+            status=#{status}
+        where match_id=#{matchId};
+    </update>
+    <update id="updateMatchStatus">
+        update gms.match set status=#{status} where match_id=#{id};
+    </update>
+    <delete id="deleteMatch" parameterType="edu.gdou.matchmanage.bean.Match">
+        delete
+        from gms.match
+        where match_id = #{matchId};
+    </delete>
+
+    <insert id="addReferee" parameterType="edu.gdou.matchmanage.bean.Referee">
+        insert into gms.referee (referee_photo, referee_name, referee_describe) value (#{refereePhoto},#{refereeName},#{refereeDescribe});
+    </insert>
+    <delete id="deleteReferee">
+        delete
+        from gms.referee
+        where referee_id = #{id};
+    </delete>
+    <select id="queryRefereeNum" resultType="int">
+        SELECT COUNT(*)
+        FROM gms.referee;
+    </select>
+    <select id="queryReferee" resultType="edu.gdou.matchmanage.bean.Referee">
+        select *
+        from referee;
+    </select>
+    <select id="queryRefereeLimit" resultType="edu.gdou.matchmanage.bean.Referee">
+        select *
+        from gms.referee limit #{offset},#{length};
+    </select>
+
+</mapper>

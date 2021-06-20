@@ -1,0 +1,19 @@
+.content_body{
+    padding: 20px;
+    background-color: gainsboro;
+}
+.form_referee{
+    padding: 50px;
+}
+.label_key{
+    padding: 5px 30px 5px 5px;
+}
+.checkbox_type{
+    padding-top: 5px;
+}
+.option{
+    padding-top: 10px;
+}
+.btn{
+    margin-left: 20px;
+}
