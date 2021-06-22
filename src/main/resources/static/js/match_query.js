@@ -16,6 +16,7 @@ new Vue({
                 data: {"offset":offset,"length":length},
                 type: "post",
                 success: function (result) {
+                    console.log(result);
                     object.list=result;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -44,13 +45,13 @@ new Vue({
             document.getElementById("ul_pages").childNodes[this.page + 1].classList.remove("active");
             document.getElementById("ul_pages").childNodes[newIndex + 1].classList.add("active");
             this.page = newIndex;
+            this.getData(this,(this.page-1)*this.length,this.length);
         },
         nextPage: function () {
             if (this.page < this.pages) {
                 this.start += 5;
                 // this.end += 5;
                 this.setActive(this.page + 1);
-                this.getData(this,this.start,this.length);
             }
         },
         previousPage: function () {
@@ -58,18 +59,16 @@ new Vue({
                 this.start -= 5;
                 // this.end -= 5;
                 this.setActive(this.page - 1);
-                this.getData(this,this.start,this.length);
             }
         },
         goto: function (index) {
             this.start = 5 * (index - 1);
             // this.end = 5 * (index);
             this.setActive(index);
-            this.getData(this,this.start,this.length);
         }
     },
     mounted() {
         this.getNum(this);
-        this.getData(this,this.start,this.length);
+        this.getData(this,(this.page-1)*this.length,this.length);
     },
 })

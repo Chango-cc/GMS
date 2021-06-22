@@ -30,7 +30,7 @@
     </select>
     <select id="queryMatchByUser" resultType="edu.gdou.matchmanage.bean.Match">
         SELECT *
-        FROM gms.match where user_id=#{id}
+        FROM gms.match where user_id=#{id} limit #{offset},#{length};
     </select>
     <select id="queryMatchByStatus" resultType="edu.gdou.matchmanage.bean.Match">
         SELECT *
@@ -39,6 +39,44 @@
     <select id="queryMatchLimit" resultType="edu.gdou.matchmanage.bean.Match">
         SELECT *
         FROM gms.match limit #{offset},#{length};
+    </select>
+    <select id="queryMatchNumByCondition1" resultType="int">
+        SELECT COUNT(*)
+        FROM gms.match where match_type in
+        <foreach  item="item" collection="type" index="index"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="queryMatchNumByCondition2" resultType="int">
+        SELECT COUNT(*)
+        FROM gms.match where status=#{status} and match_type in
+        <foreach  item="item" collection="type" index="index"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="queryMatchByCondition1" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match where match_type in
+        <foreach  item="item" collection="type" index="index"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        limit #{offset},#{length};
+    </select>
+    <select id="queryMatchByCondition2" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT *
+        FROM gms.match where status=#{status} and match_type in
+        <foreach item="item" collection="type" index="index"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        limit #{offset},#{length};
+    </select>
+    <select id="queryMatchByCondition3" resultType="edu.gdou.matchmanage.bean.Match">
+        SELECT gms.match.*,gms.referee.referee_name
+        FROM gms.match,gms.referee where gms.match.referee_id=gms.referee.referee_id and match_type in
+        <foreach item="item" collection="type" index="index"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        limit #{offset},#{length};
     </select>
     <insert id="addMatch" parameterType="edu.gdou.matchmanage.bean.Match">
         insert into gms.match (match_name, match_time, match_place, match_tools, match_type, match_describe, user_id,

@@ -11,8 +11,10 @@ public interface MatchService {
     int queryMatchNum();
     List<Match> queryMatch();
     Match queryMatchById(int id);
-    List<Match> queryMatchByUser(int id);
+    List<Match> queryMatchByUser(String id,int offset,int length);
     List<Match> queryMatchByStatus(String status);
+    int queryMatchNumByCondition(String status, String type);
+    List<Match> queryMatchByCondition(int offset,int length,String status,String type);
     List<Match> queryMatchLimit(int offset,int length);
 
     boolean addReferee(Referee referee);

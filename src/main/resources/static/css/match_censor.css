@@ -1,0 +1,26 @@
+.content_body{
+    padding: 20px;
+    background-color: gainsboro;
+}
+.table_body{
+    padding: 20px;
+}
+.page-item{
+    cursor: pointer;
+}
+.active{
+    cursor: default;
+}
+.text_operate{
+    text-decoration: underline;
+    text-decoration-color: #0e8df2;
+    color: #0e8df2;
+    cursor: pointer;
+}
+#filter_status{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.filter_option{
+    padding-bottom: 10px;
+}
