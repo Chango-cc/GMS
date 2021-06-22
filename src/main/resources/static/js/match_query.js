@@ -10,7 +10,7 @@ new Vue({
     },
     methods: {
         getData(object,offset,length){
-            $.ajax({
+            $.ajax({//异步请求
                 url: "../match/queryMatchL",
                 contentType: "application/json;charset=UTF-8",
                 data: {"offset":offset,"length":length},

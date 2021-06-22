@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/gms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    password: root123
+    url: jdbc:mysql://localhost:3306/gdou_gms_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
   servlet:
     multipart:
       max-file-size: 100MB
@@ -16,3 +16,8 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false

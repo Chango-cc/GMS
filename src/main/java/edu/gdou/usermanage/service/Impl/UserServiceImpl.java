@@ -24,7 +24,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Gmsuser> implements 
         System.out.println("lllllllllllaaiaiaisdiasdasd");
         Map<String,Object> map = new HashMap<>();
         map.put("user_name",username);
-        map.put("user_password",password);
+        map.put("user_password",password);//
         List<Gmsuser> list = userMapper.selectByMap(map);
         //这里离任相当于注销用户，不允许登录
         if(list.size()>0 && !list.get(0).getState().equals("离任")){
@@ -78,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Gmsuser> implements 
         List<Gmsuser> list = userMapper.selectList(queryWrapper);
         return list;
     }
-
+//
     @Override
     public void deleteUser(Gmsuser gmsuser) {
         gmsuser.setId(gmsuser.getId());
@@ -89,6 +89,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Gmsuser> implements 
     @Override
     public void updateUser(Gmsuser gmsuser) {
         gmsuser.setId(gmsuser.getId());
+        if(gmsuser.getUser_position().equals("场地管理员")){
+            gmsuser.setUser_admin("1");
+            gmsuser.setState("在职");
+        }else if(gmsuser.getUser_position().equals("器材管理员")){
+            gmsuser.setUser_admin("2");
+            gmsuser.setState("在职");
+        }else if(gmsuser.getUser_position().equals("赛事管理员")){
+            gmsuser.setUser_admin("3");
+            gmsuser.setState("在职");
+        }else if(gmsuser.getUser_position().equals("超级管理员")){
+            gmsuser.setUser_admin("4");
+            gmsuser.setState("在职");
+        }else {
+            gmsuser.setUser_admin("0");
+            gmsuser.setState("在读");
+        }
         userMapper.updateById(gmsuser);
     }
 

@@ -20,9 +20,9 @@ public class Gmsuser {
     private Integer id;//自增id
 
     @TableField(value = "user_id")
-    private String user_id;//一卡通
+    private String user_id;//一卡通/
 
-    private String user_name;//名字
+    private String user_name;//名字//
     private String user_password;//密码
     private String user_cardno;//身份证
     private String user_tel;//电话号码

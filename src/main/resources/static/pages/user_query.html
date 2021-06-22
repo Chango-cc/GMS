@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <!--    <link rel="stylesheet" href="../css/main.css">-->
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/user_query.css">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" id="table_user">
+    <div class="card card-margin-top">
+        <div class="card-header">
+            <i class="fa fa-filter" aria-hidden="true">&nbsp;筛选内容</i>
+            <span>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-search " aria-hidden="true" style="cursor: pointer" @click="checkUserHelp()">&nbsp;查询</i>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-file-text-o " aria-hidden="true" style="cursor: pointer">&nbsp;导出</i>
+                         <i class="fa fa-chevron-down  align-items-center" aria-hidden="true" data-toggle="collapse" href="#collapse" style="cursor: pointer"></i>
+                     </span>
+
+        </div>
+        <div id="collapse" class="collapse show" >
+            <div class="card-body row">
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selectstorey"  class="label-margin">请选择用户身份</label>
+                    <select id="selectstorey" class="selection-width" v-model="user_position" >
+                        <option >全部</option>
+                        <option >场地管理员</option>
+                        <option >器材管理员</option>
+                        <option >赛事管理员</option>
+                        <option >学生</option>
+                    </select>
+                </div>
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="inputtype" class="label-margin"  >请输入用户名字</label>
+                    <input id="inputtype" class="selection-width" placeholder="请输入用户名字" v-model="user_name" >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-margin-top card-margin-buttom"  >
+        <div class="card-header">
+            <div>
+                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>用户信息列表</span>
+            </div>
+            <div style="cursor: pointer">
+                <i id="refresh" class="fa fa-refresh " aria-hidden="true" @click="refreshListHelp()"></i>
+                <label for="refresh"  style="margin:0px;" @click="refreshListHelp()">刷新</label>
+            </div>
+        </div>
+        <div style="padding: 20px">
+            <table class="table ">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">状态</th>
+                    <th scope="col">学号</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">电话</th>
+                    <th scope="col">用户身份</th>
+                    <th scope="col">在职状态</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in list" :key="index" :content="item">
+                    <th>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" :id="index" name="example1" @click="ischecked(index,item.id)">
+                            <label class="custom-control-label" :for="index"></label>
+                        </div>
+                    </th>
+                    <td>{{item.user_id}}</td>
+                    <td>{{item.user_name}}</td>
+                    <td>{{item.user_tel}}</td>
+                    <td>{{item.user_position}}</td>
+                    <td>{{item.state}}</td>
+                    <td>
+                        <div  class="placeoption">
+                            <a href="#" class="badge badge-info" data-toggle="modal" :data-target="modalid"><i class="fa fa-pencil fa-2x" aria-hidden="true" @click="dochecked(index,item.id)"></i></a>
+                            <a href="#" class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="delUsertoObject(index)"></i></a>
+                            <!-- //update -->
+                            <div>
+                                <div class="modal fade" id="myModal4_update" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                    <!--                        <i id="squareed" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop"></i>-->
+                                                    <label class="label-margin" @click="sentChecked()">修改用户信息</label>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body text-center">
+
+                                                <form class="was-validated"  >
+<!--                                                    <form class="was-validated" method="post" :action="'/user/updateUser?userId='+item.id" >-->
+                                                    <!--                        @submit="checkPlaceNo"-->
+                                                    <!--                        <div class="invalid-feedback">-->
+                                                    <!--                            &nbsp;{{placemsg}}-->
+                                                    <!--                        </div>-->
+                                                    <div class="mb-3">
+                                                        <div class="input-group is-invalid">
+                                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrepend" >
+<!--                                                    <i class="fa fa-list-ol" aria-hidden="true"></i>-->
+                                                    &nbsp;&nbsp;用户名字
+                                                </span>
+                                                            </div>
+                                                            <input type="text" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" name="user_name"  v-model="updateUserName" required>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <div class="input-group is-invalid">
+                                                            <div class="input-group-prepend">
+                                                                <label class="input-group-text" for="validatedInputGroupSelect">
+                                                                    <!--                                        <i class="fa fa-hospital-o" aria-hidden="true"></i>-->
+                                                                    &nbsp;&nbsp;用户身份
+                                                                </label>
+                                                            </div>
+                                                            <select class="custom-select" id="validatedInputGroupSelect" name="user_position" v-model="updateUserPosition" required>
+                                                                <option >超级管理员</option>
+                                                                <option >场地管理员</option>
+                                                                <option >器材管理员</option>
+                                                                <option >赛事管理员</option>
+                                                                <option >学生</option>
+                                                            </select>
+                                                        </div>
+                                                        <!--                                        <div class="invalid-feedback">-->
+                                                        <!--                                            Example invalid input group feedback-->
+                                                        <!--                                        </div>-->
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <div class="input-group is-invalid">
+                                                            <div class="input-group-prepend">
+                                                                <label class="input-group-text" for="validatedInputGroupSelectt">
+                                                                    <!--                                        <i class="fa fa-spinner" aria-hidden="true"></i>-->
+                                                                    &nbsp;&nbsp;用户电话
+                                                                </label>
+                                                            </div>
+                                                            <input class="custom-select" id="validatedInputGroupSelectt" name="user_tel" v-model="updateUserTel"  required>
+                                                        </div>
+                                                        <!--                                        <div class="invalid-feedback">-->
+                                                        <!--                                            Example invalid input group feedback-->
+                                                        <!--                                        </div>-->
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                                        <button type="submit" class="btn btn-primary" @click="updateUser()">确定</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //update -->
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="card-footer text-muted">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/user_query.js"></script>
+</body>
+</html>

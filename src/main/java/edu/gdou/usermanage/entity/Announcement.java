@@ -28,7 +28,7 @@ public class Announcement {
 
     public void setId(Integer id) {
         this.id = id;
-    }
+    }//
 
     public Date getTime() {
         return time;
