@@ -67,8 +67,8 @@ public class UserController {
     public String doLogin(String username, String password,
                         String valideCode, HttpSession session, Model model){//ModleAndView
        Gmsuser loginUser =  userService.login(username,password);
-        if(loginUser != null){ //成
-            //在Session保存用户信
+        if(loginUser != null){ //成功
+            //在Session保存用户信息
             session.setAttribute("user",loginUser);
 //            return "redirect:/queryAuctions";//queryAuction.html//重定向
             return "redirect:/index.html";
