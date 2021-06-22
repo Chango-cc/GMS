@@ -68,7 +68,7 @@ public class UserController {
                         String valideCode, HttpSession session, Model model){//ModleAndView
        Gmsuser loginUser =  userService.login(username,password);
         if(loginUser != null){ //成功
-            //在Session保存用户信息
+            //在Session保存用户信
             session.setAttribute("user",loginUser);
 //            return "redirect:/queryAuctions";//queryAuction.html//重定向
             return "redirect:/index.html";
