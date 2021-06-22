@@ -8,7 +8,7 @@ public class Access {
         List<ChildMenu>list=new ArrayList<ChildMenu>();
         ChildMenu childMenu;
         childMenu=new ChildMenu("0","用户查询",0,"match/queryMatch",0b10001);list.add(childMenu);
-        childMenu=new ChildMenu("0","用户新建",0,"match/queryMatch",0b00100);list.add(childMenu);
+        childMenu=new ChildMenu("0","用户新建",0,"match/queryMatch",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","赛事查询",3,"match/queryMatch",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","赛事创建",3,"match/newMatch",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","赛事取消",3,"match/cancelMatch",0b10001);list.add(childMenu);
@@ -16,7 +16,10 @@ public class Access {
         childMenu=new ChildMenu("0","裁判公告",3,"match/queryReferee",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","裁判创建",3,"match/newReferee",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","裁判删除",3,"match/deleteReferee",0b10001);list.add(childMenu);
-        childMenu=new ChildMenu("0","裁判删除",3,"match/deleteReferee",0b11111);list.add(childMenu);
+        childMenu=new ChildMenu("0","场地总览",1,"place/toPlace",0b11111);list.add(childMenu);
+        childMenu=new ChildMenu("0","场地预约",1,"place/toPlaceKeep",0b11111);list.add(childMenu);
+        childMenu=new ChildMenu("0","添加场地",1,"match/deleteReferee",0b11111);list.add(childMenu);
+        childMenu=new ChildMenu("0","删除场地",1,"match/deleteReferee",0b11111);list.add(childMenu);
         return list;
     }
     public static List<ParentMenu> getList(){
