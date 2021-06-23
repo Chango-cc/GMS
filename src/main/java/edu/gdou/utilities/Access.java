@@ -8,7 +8,6 @@ public class Access {
         List<ChildMenu>list=new ArrayList<ChildMenu>();
         ChildMenu childMenu;
         childMenu=new ChildMenu("0","用户查询",0,"user/queryUser",0b10001);list.add(childMenu);
-        childMenu=new ChildMenu("0","用户新建",0,"match/queryMatch",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","赛事查询",3,"match/queryMatch",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","赛事创建",3,"match/newMatch",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","我的赛事",3,"match/modifyMatch",0b10001);list.add(childMenu);
