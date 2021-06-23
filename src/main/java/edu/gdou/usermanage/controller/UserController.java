@@ -37,13 +37,22 @@ public class UserController {
         List<Gmsuser> list = userService.selectByMap(user_position,user_name);
         return list;
     }
+    @RequestMapping("updateUser")
+    @ResponseBody
+    public void updateUser(Integer id,String updateUserName,String updateUserPosition,String updateUserTel){
+        Gmsuser updateuser=new Gmsuser();
+        updateuser.setId(id);
+        updateuser.setUser_name(updateUserName);
+        updateuser.setUser_position(updateUserPosition);
+        updateuser.setUser_tel(updateUserTel);
+        userService.updateUser(updateuser);
+    }
     @RequestMapping("refreshList")
     @ResponseBody
     public List<Gmsuser> refreshList(){
         List<Gmsuser> list = userService.selectAll();
         return list;
     }
-
     @RequestMapping("queryUserNum")
     @ResponseBody
     public int queryUserNum() {
@@ -67,8 +76,8 @@ public class UserController {
     public String doLogin(String username, String password,
                         String valideCode, HttpSession session, Model model){//ModleAndView
        Gmsuser loginUser =  userService.login(username,password);
-        if(loginUser != null){ //成
-            //在Session保存用户信
+        if(loginUser != null){ //成功
+            //在Session保存用户信息
             session.setAttribute("user",loginUser);
 //            return "redirect:/queryAuctions";//queryAuction.html//重定向
             return "redirect:/index.html";
@@ -114,6 +123,15 @@ public class UserController {
             response.getWriter().flush();
             return "redirect:/user/register";
         }
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(Gmsuser updateuser,@RequestParam("userId") Integer id){
+        System.out.println("id:"+id);
+        updateuser.setId(id);
+        System.out.println("!!!!!:"+updateuser);
+        userService.updateUser(updateuser);
+        return "redirect:/user/queryUser";
     }
 
     @GetMapping("/index")

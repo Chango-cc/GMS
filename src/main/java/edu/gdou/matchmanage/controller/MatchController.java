@@ -1,6 +1,6 @@
 package edu.gdou.matchmanage.controller;
 
-import com.google.gson.JsonObject;
+
 import edu.gdou.matchmanage.bean.Match;
 import edu.gdou.matchmanage.bean.Referee;
 import edu.gdou.matchmanage.service.MatchService;
@@ -49,16 +49,16 @@ public class MatchController {
         return "match_new";
     }
 
-    @RequestMapping("queryMatchNum1")
-    @ResponseBody
-    public void queryMatchNum1(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.setHeader("Content-type", "application/json;charset=UTF-8");
-        res.setCharacterEncoding("UTF-8");
-        int num=service.queryMatchNum();
-        JsonObject jsonContainer =new JsonObject();
-        jsonContainer.addProperty("num", num);
-        res.getWriter().write(jsonContainer.toString());
-    }
+//    @RequestMapping("queryMatchNum1")
+//    @ResponseBody
+//    public void queryMatchNum1(HttpServletRequest req, HttpServletResponse res) throws IOException {
+//        res.setHeader("Content-type", "application/json;charset=UTF-8");
+//        res.setCharacterEncoding("UTF-8");
+//        int num=service.queryMatchNum();
+//        JsonObject jsonContainer =new JsonObject();
+//        jsonContainer.addProperty("num", num);
+//        res.getWriter().write(jsonContainer.toString());
+//    }
 
     @RequestMapping("queryMatchNum")
     @ResponseBody
