@@ -89,6 +89,11 @@ public class MatchServiceImp implements MatchService{
     }
 
     @Override
+    public List<Referee> queryRefereeByType(String type) {
+        return matchDao.queryRefereeByType(type);
+    }
+
+    @Override
     public List<Referee> queryRefereeLimit(int offset, int length) {
         return matchDao.queryRefereeLimit(offset, length);
     }

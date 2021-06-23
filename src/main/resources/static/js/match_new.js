@@ -1,5 +1,5 @@
 const app=new Vue({
-    el:"",
+    el:"#form_match",
     data: {
         isValid: false,
         username: "",
@@ -9,6 +9,7 @@ const app=new Vue({
             {type: "羽毛球", state: false},
             {type: "排球",state: false},
             {type: "棒球", state: false}],
+        type:"请选择类型",
     },
     methods:{
         getData(object,offset,length){
@@ -24,5 +25,14 @@ const app=new Vue({
                 }
             })
         },
+        indexSelect(e){
+            console.log(e);
+            console.log(e.target.selectedIndex); // 选择项的index索引
+            console.log(e.target.value);// 选择项的value，也就是v-bind:value 的绑定值，如果换成 v-bind:value="item.id",则打印的是 选中项的id
+            console.log(this.type);
+        },
     },
+    mounted(){
+        console.log(this.type);
+    }
 })

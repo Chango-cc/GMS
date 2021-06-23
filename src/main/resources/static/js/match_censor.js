@@ -1,7 +1,6 @@
 new Vue({
     el: "#table_match",
     data: {
-        start: 0,
         length: 5,
         pages: 1,
         page: 1,
@@ -106,7 +105,10 @@ new Vue({
             for (const checkbox of this.checkboxes) {
                 checkbox.checked=true;
             }
-        }
+        },
+        // detailPage(id){
+        //     location.href="matchDetail?id="+id;
+        // }
     },
     mounted() {
         this.getNum();

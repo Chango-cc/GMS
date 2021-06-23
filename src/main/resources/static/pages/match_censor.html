@@ -77,7 +77,8 @@
                 <td>{{item.matchTime}}</td>
                 <td>{{item.matchPlace}}</td>
                 <td>{{item.status}}</td>
-                <td><span class="text_operate">查看详情</span></td>
+                <td><a class="text_operate" :id="item.matchId" :href="'censorMatchDetail?id='+(item.matchId)">查看详情</a></td>
+<!--                <td><span class="text_operate" @click="detailPage(item.matchId)" :id="item.matchId">查看详情</span></td>-->
             </tr>
             </tbody>
         </table>

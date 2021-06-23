@@ -122,6 +122,9 @@
         select *
         from referee;
     </select>
+    <select id="queryRefereeByType" resultType="edu.gdou.matchmanage.bean.Referee">
+        select * from referee where referee_photo like concat('%',#{type},'%');
+    </select>
     <select id="queryRefereeLimit" resultType="edu.gdou.matchmanage.bean.Referee">
         select *
         from gms.referee limit #{offset},#{length};

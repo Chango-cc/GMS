@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
-    <!--    <link rel="stylesheet" href="../css/main.css">-->
     <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/vue.js"></script>
@@ -14,37 +13,42 @@
 <div class="bg-white" style="padding: 10px 10px 10px 20px;">赛事管理>>赛事创建</div>
 <div class="content_body">
     <div class="form_referee bg-white">
-        <h3>赛事创建</h3>
+        <h3>赛事详情</h3>
         <hr>
         <form id="form_match">
             <div class="option input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="label_key" id="basic-addon1">赛事名称:</span>
                 </div>
-                <input type="text" id="userName" name="userName" class="form-control" placeholder="matchName" aria-label="Username" v-model="username">
+                <input type="text" id="matchName" name="matchName" class="form-control" placeholder="matchName" aria-label="matchName" v-model="match.matchName">
                 <div class="invalid-feedback has-error-required" style="padding-left: 70px"></div>
             </div>
             <div class="option input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="label_key">赛事描述:</span>
                 </div>
-                <textarea class="form-control" name="description" aria-label="With textarea" v-model="description"></textarea>
+                <textarea class="form-control" name="description" aria-label="With textarea" v-model="match.matchDescribe"></textarea>
             </div>
             <div class="option input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="label_key">赛事类型:</span>
                 </div>
                 <div width="100%">
-                <select class="custom-select" v-on:change="indexSelect($event)" v-model="type">
-                    <option selected>请选择类型</option>
-                    <option v-for="(item,index) in list" :key="index" :content="item"  v-bind:value="item.type">{{item.type}}</option>
-                </select>
+                    <select class="custom-select" v-model="match.matchType">
+                        <option v-for="(item,index) in list" :key="index" :content="item"  v-bind:value="item.type">{{item.type}}</option>
+                    </select>
                 </div>
             </div>
-            <div class="option input-group mb-3">
+<!--            <div class="option input-group mb-3">-->
 <!--                <div class="input-group-prepend">-->
-<!--                    <span class="label_key">赛事场地:</span>-->
+<!--                    <span class="label_key">赛事裁判:</span>-->
 <!--                </div>-->
+<!--                <span style="padding-top: 5px">{{match.refereeId}}</span>-->
+<!--            </div>-->
+            <div class="option input-group mb-3">
+                <!--                <div class="input-group-prepend">-->
+                <!--                    <span class="label_key">赛事场地:</span>-->
+                <!--                </div>-->
                 <div class="accordion" id="accordionExample" style="width: 100%">
                     <div class="card">
                         <div class="card-header" id="headingOne">
@@ -151,6 +155,6 @@
         </form>
     </div>
 </div>
-<script type="text/javascript" src="../js/match_new.js"></script>
+<script type="text/javascript" src="../js/match_detail_modify.js"></script>
 </body>
 </html>
