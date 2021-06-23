@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.gdou.placemange.entity.Place;
 import edu.gdou.placemange.entity.PlaceApply;
+import edu.gdou.placemange.entity.PlaceAvailable;
 import edu.gdou.placemange.mapper.PlaceApplyMapper;
 import edu.gdou.placemange.service.PlaceApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -23,10 +26,23 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
     插入场地申请信息
      */
     @Override
-    public void PlaceApplyInsert(PlaceApply placeApply) {
+    public void PlaceApplyInsert(List<PlaceAvailable> keepList) throws ParseException {
 
-        int rows = placeApplyMapper.insert(placeApply);
-        System.out.println("插入产生的影响行数"+rows);
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0 ; i<keepList.size();i++){
+            System.out.println("对应的场地编号是：   "+keepList.get(i).getPlaceNo());
+            Date date = dateformat.parse(keepList.get(i).getApplyDate());
+            PlaceApply placeApply = new PlaceApply();
+            placeApply.setPlaceNo(keepList.get(i).getPlaceNo());
+            placeApply.setPlaceStorey(keepList.get(i).getPlaceStorey());
+            placeApply.setPlaceType(keepList.get(i).getPlaceType());
+            placeApply.setApplyDate(date);
+            placeApply.setApplyPeriod(keepList.get(i).getApplyPeriod());
+            placeApply.setApplyType("非赛事");
+            placeApply.setApplyState("待审核");
+            int rows = placeApplyMapper.insert(placeApply);
+            System.out.println("插入产生的影响行数"+rows);
+        }
 
     }
 

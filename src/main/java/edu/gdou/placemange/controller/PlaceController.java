@@ -208,22 +208,23 @@ public class PlaceController {
     @ResponseBody
     public String placeKeeping(@RequestBody List<PlaceAvailable> keepList ,HttpSession session) throws ParseException {
 
-        List<PlaceAvailable> list = keepList;
-        System.out.println("-------------------------------"+keepList.toString());
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-        for (int i = 0 ; i<list.size();i++){
-            System.out.println("对应的场地编号是：   "+list.get(i).getPlaceNo());
-            Date date = dateformat.parse(list.get(i).getApplyDate());
-            PlaceApply placeApply = new PlaceApply();
-            placeApply.setPlaceNo(list.get(i).getPlaceNo());
-            placeApply.setPlaceStorey(list.get(i).getPlaceStorey());
-            placeApply.setPlaceType(list.get(i).getPlaceType());
-            placeApply.setApplyDate(date);
-            placeApply.setApplyPeriod(list.get(i).getApplyPeriod());
-            placeApply.setApplyType("非赛事");
-            placeApply.setApplyState("待审核");
-            placeApplyService.PlaceApplyInsert(placeApply);
-        }
+        placeApplyService.PlaceApplyInsert(keepList);
+//        List<PlaceAvailable> list = keepList;
+//        System.out.println("-------------------------------"+keepList.toString());
+//        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+//        for (int i = 0 ; i<list.size();i++){
+//            System.out.println("对应的场地编号是：   "+list.get(i).getPlaceNo());
+//            Date date = dateformat.parse(list.get(i).getApplyDate());
+//            PlaceApply placeApply = new PlaceApply();
+//            placeApply.setPlaceNo(list.get(i).getPlaceNo());
+//            placeApply.setPlaceStorey(list.get(i).getPlaceStorey());
+//            placeApply.setPlaceType(list.get(i).getPlaceType());
+//            placeApply.setApplyDate(date);
+//            placeApply.setApplyPeriod(list.get(i).getApplyPeriod());
+//            placeApply.setApplyType("非赛事");
+//            placeApply.setApplyState("待审核");
+//            placeApplyService.PlaceApplyInsert(placeApply);
+//        }
 
         return "success";
     }

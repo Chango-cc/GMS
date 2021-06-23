@@ -2,8 +2,10 @@ package edu.gdou.placemange.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import edu.gdou.placemange.entity.PlaceApply;
+import edu.gdou.placemange.entity.PlaceAvailable;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +15,8 @@ public interface PlaceApplyService extends IService<PlaceApply> {
     /*
     插入场地申请信息
      */
-    public void PlaceApplyInsert(PlaceApply placeApply);
+//    public void PlaceApplyInsert(PlaceApply placeApply);
+    public void PlaceApplyInsert(List<PlaceAvailable> keepList) throws ParseException;
 
     /*
     修改场地申请状态
