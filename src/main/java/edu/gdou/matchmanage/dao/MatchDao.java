@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface MatchDao {
     boolean addMatch(Match match);
-    boolean deleteMatch(Match match);
+    boolean deleteMatch(int id);
     boolean updateMatch(Match match);
     boolean updateMatchStatus(int id,String status);
     int queryMatchNum();

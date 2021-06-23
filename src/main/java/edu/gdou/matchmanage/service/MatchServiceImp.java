@@ -14,12 +14,25 @@ public class MatchServiceImp implements MatchService{
     private MatchDao matchDao;
     @Override
     public boolean addMatch(Match match) {
+        match.setStatus("待审核");
         return matchDao.addMatch(match);
     }
 
     @Override
-    public boolean deleteMatch(Match match) {
-        return matchDao.deleteMatch(match);
+    public boolean deleteMatch(int id) {
+        return matchDao.deleteMatch(id);
+    }
+
+    @Override
+    public boolean updateMatch(Match match) {
+        match.setStatus("待审核");
+        return matchDao.updateMatch(match);
+    }
+
+    @Override
+    public boolean updateMatchStatus(int id, String status) {
+        status="已审核";
+        return matchDao.updateMatchStatus(id,status);
     }
 
     @Override

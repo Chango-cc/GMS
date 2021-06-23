@@ -8,6 +8,7 @@ const app = new Vue({
             {type: "排球", state: false},
             {type: "棒球", state: false}],
         match:{},
+        type:""
     },
     methods: {
         getQueryString(name) {
@@ -28,6 +29,21 @@ const app = new Vue({
                 success: function (result) {
                     object.match=result;
                     console.log(object.match);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error message：" + XMLHttpRequest.responseText);
+                }
+            })
+        },
+        submitInfo() {
+            const object=this;
+            $.ajax({
+                url: "../match/censorMatchPass",
+                contentType: "application/json;charset=UTF-8",
+                data:{"match":object.match},
+                type: "post",
+                success: function (result) {
+                    console.log(result);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);

@@ -35,7 +35,7 @@ new Vue({
             str_type = str_type.substring(0, str_type.length - 1);
             console.log("str_type:"+str_type);
             console.log("type[]:"+type);
-            $.ajax({//异步请求
+            $.ajax({
                 url: "../match/queryMatchByCondition",
                 contentType: "application/json;charset=UTF-8",
                 data: {"offset":(this.page-1)*this.length,"length":object.length,"status":this.picked,"type":str_type},

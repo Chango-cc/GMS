@@ -54,6 +54,7 @@ new Vue({
                 type: "get",
                 success: function (result) {
                     console.log(result);
+                    alert("删除成功");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);

@@ -14,7 +14,7 @@ public class ChildMenu {
         this.url = url;
         this.code = code;
     }
-//
+
     public String getId() {
         return id;
     }

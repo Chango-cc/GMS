@@ -7,6 +7,7 @@
     <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-validate.js"></script>
     <link rel="stylesheet" href="../css/match_new.css">
     <title>Title</title>
 </head>
@@ -21,8 +22,8 @@
                 <div class="input-group-prepend">
                     <span class="label_key" id="basic-addon1">赛事名称:</span>
                 </div>
-                <input type="text" id="userName" name="userName" class="form-control" placeholder="matchName" aria-label="Username" v-model="username">
-                <div class="invalid-feedback has-error-required" style="padding-left: 70px"></div>
+                <input type="text" id="matchName" name="userName" class="form-control" placeholder="matchName" aria-label="Username" v-model="matchName">
+                <div class="invalid-feedback has-error-required" style="padding-left: 100px"></div>
             </div>
             <div class="option input-group mb-3">
                 <div class="input-group-prepend">

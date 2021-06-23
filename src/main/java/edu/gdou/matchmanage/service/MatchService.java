@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface MatchService {
     boolean addMatch(Match match);
-    boolean deleteMatch(Match match);
+    boolean deleteMatch(int id);
+    boolean updateMatch(Match match);
+    boolean updateMatchStatus(int id,String status);
     int queryMatchNum();
     List<Match> queryMatch();
     Match queryMatchById(int id);

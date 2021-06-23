@@ -4,6 +4,19 @@ new Vue({
         length: 5,
         pages: 1,
         page: 1,
+        checkboxes:[
+            {id:"checkboxes_1",name:"足球",checked: true},
+            {id:"checkboxes_2",name:"篮球",checked: true},
+            {id:"checkboxes_3",name:"羽毛球",checked: true},
+            {id:"checkboxes_4",name:"排球",checked: true},
+            {id:"checkboxes_5",name:"棒球",checked: true},
+        ],
+        radios:[
+            {id:"radio_1",name:"all",checked: false},
+            {id:"radio_2",name:"待审核",checked: false},
+            {id:"radio_3",name:"已审核",checked: false},
+            {id:"radio_4",name:"已结束",checked: false},
+        ],
         list: [],
     },
     methods: {

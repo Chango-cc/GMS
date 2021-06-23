@@ -32,6 +32,23 @@ const app = new Vue({
                 }
             })
         },
+        submitInfo() {
+            const object=this;
+            $.ajax({
+                url: "../match/censorMatchPass",
+                contentType: "application/json;charset=UTF-8",
+                data:{"id":object.getQueryString("id")},
+                type: "get",
+                success: function (result) {
+                    object.match=result;
+                    object.getReferee();
+                    console.log(object.match);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error message：" + XMLHttpRequest.responseText);
+                }
+            })
+        },
         getReferee() {
             const object=this;
             $.ajax({

@@ -141,8 +141,27 @@ public class MatchController {
 
     @RequestMapping("addMatch")
     @ResponseBody
-    public String addMatch() {
-        return null;
+    public boolean addMatch(@RequestBody Match match) {
+//        System.out.println(match);
+        return service.addMatch(match);
+    }
+    @RequestMapping("updateMatch")
+    @ResponseBody
+    public boolean updateMatch(@RequestBody Match match) {
+//        System.out.println(match);
+        return service.updateMatch(match);
+    }
+    @RequestMapping("censorMatchPass")
+    @ResponseBody
+    public boolean censorMatch(int id,String status) {
+//        System.out.println(match);
+        return service.updateMatchStatus(id,status);
+    }
+    @RequestMapping("deleteMatch")
+    @ResponseBody
+    public boolean deleteMatch(int id) {
+//        System.out.println(match);
+        return service.deleteMatch(id);
     }
 
     @RequestMapping("getMenu")
@@ -162,8 +181,7 @@ public class MatchController {
     @RequestMapping("removeReferee")
     @ResponseBody
     public boolean deleteReferee(int index){
-        System.out.println(index);
-        return false;
+        return service.deleteReferee(index);
     }
 
     @RequestMapping("queryRefereeNum")
