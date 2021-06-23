@@ -70,12 +70,19 @@
             </tr>
             </thead>
             <tbody>
+<!--            <tr>-->
+<!--                <th>{item.matchName}}</th>-->
+<!--                <td>{item.matchType}}</td>-->
+<!--                <td>{item.matchTime}}</td>-->
+<!--                <td>{item.matchPlace}}</td>-->
+<!--                <td><a class="text_operate" href="http://localhost:8080/match/matchDetail?id=1">查看详情</a></td>-->
+<!--            </tr>-->
             <tr v-for="(item,index) in list" :key="index" :content="item">
                 <th scope="row">{{item.matchName}}</th>
                 <td>{{item.matchType}}</td>
                 <td>{{item.matchTime}}</td>
                 <td>{{item.matchPlace}}</td>
-                <td><span class="text_operate">查看详情</span></td>
+                <td><a class="text_operate" :href="'matchDetail?id='+(item.matchId)">查看详情</a></td>
             </tr>
             </tbody>
         </table>

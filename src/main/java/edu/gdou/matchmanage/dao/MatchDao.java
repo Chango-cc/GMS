@@ -31,6 +31,7 @@ public interface MatchDao {
     boolean deleteReferee(int id);
     int queryRefereeNum();
     List<Referee> queryReferee();
+    List<Referee> queryRefereeByType(String type);
     List<Referee> queryRefereeLimit(int offset,int length);
 
 }

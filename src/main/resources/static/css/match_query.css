@@ -17,3 +17,10 @@
     color: #0e8df2;
     cursor: pointer;
 }
+#filter_status{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.filter_option{
+    padding-bottom: 10px;
+}
