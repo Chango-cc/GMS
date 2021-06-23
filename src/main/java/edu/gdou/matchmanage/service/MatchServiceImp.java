@@ -38,13 +38,29 @@ public class MatchServiceImp implements MatchService{
     }
 
     @Override
-    public List<Match> queryMatchByUser(int id) {
-        return matchDao.queryMatchByUser(id);
+    public List<Match> queryMatchByUser(String id,int offset,int length) {
+        return matchDao.queryMatchByUser(id,offset,length);
     }
 
     @Override
     public List<Match> queryMatchByStatus(String status) {
         return matchDao.queryMatchByStatus(status);
+    }
+
+    @Override
+    public int queryMatchNumByCondition(String status, String type) {
+        String[] types=type.split(",");
+        if (status.equals("all"))
+            return matchDao.queryMatchNumByCondition1(types);
+        else return matchDao.queryMatchNumByCondition2(status,types);
+    }
+    @Override
+    public List<Match> queryMatchByCondition(int offset, int length, String status, String type) {
+        String[] types=type.split(",");
+        if (status.equals("all")){
+            List<Match> list=matchDao.queryMatchByCondition1(offset, length, types);
+            return list;}
+        else return matchDao.queryMatchByCondition2(offset, length, status, types);
     }
 
     @Override

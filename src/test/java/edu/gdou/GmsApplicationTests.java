@@ -40,6 +40,7 @@ class GmsApplicationTests {
 
 	//增加用户
 	@Test
+
 	void testInsertUser(){
 		// 创建对象
 		Gmsuser gmsuser = new Gmsuser();
@@ -64,10 +65,28 @@ class GmsApplicationTests {
 			int rows = userDao.insert(gmsuser);
 			System.out.println("插入产生的影响行数" + rows);
 		}else System.out.println("没插入");
+    
+	void test(){
+//		System.out.println("time:"+(System.currentTimeMillis()/1000)+" DAO:"+matchDao);
+		Timestamp a=new Timestamp(System.currentTimeMillis());
+		Match match=new Match("5","naame5",  a,"placeasdf44","toolfsasfs4","typsae4","descrasfibe4","null","null",1,"1");
+		System.out.println(match);
+//		boolean r=matchDao.addMatch(match);
+//		boolean r1=matchDao.addMatch(match);
+//		System.out.println("result:"+r);
+		List<Match> list =matchDao.queryMatch();
+		System.out.println(list);
+//		System.out.println("num:"+matchDao.queryMatchNum());
+//		System.out.println(matchDao.queryReferee());
+//		Referee referee=new Referee("2","/sdfsaf","namea","sadhf");
+//		boolean r=matchDao.addReferee(referee);
+//		System.out.println("result:"+r);
+
 	}
 
 	//删除用户(靠主键id)
 	@Test
+
 	void testDeleteUserById(){
 		 /*调用对应的方法
        delete place SET place_storey=?, place_type=?, place_manageid=?, place_manage=?, place_state=? WHERE place_no=?
@@ -143,4 +162,13 @@ class GmsApplicationTests {
 	void testUpdateUser(){
 
 	}
+
+	void test1(){
+//		matchDao.updateMatchStatus(2,"2");
+//		System.out.println(matchDao.queryMatchLimit(1,3));
+		String a="足球,篮球,羽毛球,排球,棒球";
+		String[] type=a.split(",");
+		System.out.println(matchDao.queryMatchByCondition3(0,8,type));
+	}
+
 }

@@ -33,6 +33,9 @@ public class MatchDaoTest {
     }
     @Test
     public void test1(){
-        System.out.println(Access.getList());
+        Timestamp a=new Timestamp(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(a);
+//        System.out.println(Access.getList());
     }
 }

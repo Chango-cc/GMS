@@ -3,31 +3,65 @@ new Vue({
     data: {
         start: 0,
         length: 5,
-        // end: 5,
         pages: 1,
         page: 1,
         list: [],
+        checkboxes:[
+            {id:"checkboxes_1",name:"足球",checked: true},
+            {id:"checkboxes_2",name:"篮球",checked: true},
+            {id:"checkboxes_3",name:"羽毛球",checked: true},
+            {id:"checkboxes_4",name:"排球",checked: true},
+            {id:"checkboxes_5",name:"棒球",checked: true},
+        ],
+        radios:[
+            {id:"radio_1",name:"all",checked: false},
+            {id:"radio_2",name:"待审核",checked: false},
+            {id:"radio_3",name:"已审核",checked: false},
+            {id:"radio_4",name:"已结束",checked: false},
+        ],
+        picked:"all",
     },
     methods: {
-        getData(object,offset,length){
+        getData(){
+            const object = this;
+            var str_type="";
+            var type=new Array();
+            for (const checkbox of object.checkboxes) {
+                console.log("checked:"+checkbox.checked);
+                if (checkbox.checked) {
+                    str_type += (checkbox.name +",");
+                }
+            }
+            str_type = str_type.substring(0, str_type.length - 1);
+            console.log("str_type:"+str_type);
+            console.log("type[]:"+type);
             $.ajax({
-                url: "../match/queryMatchL",
+                url: "../match/queryMatchByCondition",
                 contentType: "application/json;charset=UTF-8",
-                data: {"offset":offset,"length":length},
-                type: "post",
+                data: {"offset":(this.page-1)*this.length,"length":object.length,"status":this.picked,"type":str_type},
+                type: "get",
                 success: function (result) {
                     object.list=result;
+                    console.log(object.list);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
                 }
             })
         },
-        getNum(object){
+        getNum(){
+            const object = this;
+            var str_type="";
+            for (const checkbox of object.checkboxes) {
+                if (checkbox.checked)
+                    str_type += (checkbox.name +",");
+            }
+            str_type = str_type.substring(0, str_type.length - 1);
             $.ajax({
-                url: "../match/queryMatchNum",
+                url: "../match/queryMatchNumByCondition",
                 contentType: "application/json;charset=UTF-8",
-                type: "post",
+                data: {"status":this.picked,"type":str_type},
+                type: "get",
                 success: function (result) {
                     object.setPages(Math.ceil(result / 5));
                     document.getElementById("1").classList.add("active");
@@ -44,32 +78,38 @@ new Vue({
             document.getElementById("ul_pages").childNodes[this.page + 1].classList.remove("active");
             document.getElementById("ul_pages").childNodes[newIndex + 1].classList.add("active");
             this.page = newIndex;
+            this.getData();
         },
         nextPage: function () {
             if (this.page < this.pages) {
-                this.start += 5;
-                // this.end += 5;
-                this.setActive(this.page + 1);
-                this.getData(this,this.start,this.length);
+                this.goto(this.page + 1);
             }
         },
         previousPage: function () {
             if (this.page > 1) {
-                this.start -= 5;
-                // this.end -= 5;
-                this.setActive(this.page - 1);
-                this.getData(this,this.start,this.length);
+                this.goto(this.page - 1);
             }
         },
         goto: function (index) {
-            this.start = 5 * (index - 1);
-            // this.end = 5 * (index);
-            this.setActive(index);
-            this.getData(this,this.start,this.length);
+            document.getElementById("ul_pages").childNodes[this.page + 1].classList.remove("active");
+            document.getElementById("ul_pages").childNodes[index + 1].classList.add("active");
+            this.page = index;
+            this.getData();
+        },
+        getDataByCondition:function (){
+            this.page=1;
+            this.getNum();
+            this.getData();
+        },
+        reset:function (){
+            this.picked="all"
+            for (const checkbox of this.checkboxes) {
+                checkbox.checked=true;
+            }
         }
     },
     mounted() {
-        this.getNum(this);
-        this.getData(this,this.start,this.length);
+        this.getNum();
+        this.getData();
     },
 })

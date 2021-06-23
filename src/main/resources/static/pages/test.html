@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>test</title>
+  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <input type="radio" id="small" value="small_value" v-model="picked">
+  <label for="small">small</label>
+  <br>
+  <input type="radio" id="big" value="big_value" v-model="picked">
+  <label for="big">big</label>
+  <br>
+  <span>Picked: {{ picked }}</span>
+</div>
+
+<!--复选框-->
+<div id="app1">
+  <input type="checkbox" id="one" value="value_one" v-model.lazy="checkedNames">
+  <label for="one">选项一</label>
+  <input type="checkbox" id="two" value="value_two" v-model.lazy="checkedNames">
+  <label for="two">选项二</label>
+  <input type="checkbox" id="three" value="value_three" v-model.lazy="checkedNames">
+  <label for="three">选项三</label>
+  <br>
+  <span>Checked names: {{ checkedNames }}</span>
+</div>
+<script src="/resources/js/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app1',
+    data: {
+      checkedNames: []
+    }
+  })
+</script>
+<script src="/resources/js/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      picked: 'small_value'
+    }
+  })
+</script>
+</body>
+</html>

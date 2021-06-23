@@ -7,31 +7,33 @@
     <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/vue.js"></script>
-    <link rel="stylesheet" href="../css/match_referee_delete.css">
+    <link rel="stylesheet" href="../css/match_query.css">
     <title>Title</title>
 </head>
 <body>
 
-<div class="bg-white" style="padding: 10px 10px 10px 20px;">赛事管理>>裁判信息</div>
+<div class="bg-white" style="padding: 10px 10px 10px 20px;">赛事管理>>赛事变更</div>
 <div class="content_body">
-    <div id="table_referee" class="table_body bg-white">
+    <div id="table_match" class="table_body bg-white">
         <table class="table table-bordered">
             <thead>
             <tr>
-<!--                <th scope="col" width="">#</th>-->
-                <th scope="col" width="15%">姓名</th>
-                <th scope="col" width="20%">类型</th>
-                <th scope="col" width="50%">描述</th>
-                <th scope="col" width="15%">操作</th>
+                <th scope="col" width="20%">名称</th>
+                <th scope="col" width="11%">类型</th>
+                <th scope="col" width="25%">时间</th>
+                <th scope="col" width="20%">地点</th>
+                <th scope="col" width="12%">状态</th>
+                <th scope="col" width="12%">详情</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(item,index) in list" :key="index" :content="item">
-<!--                <th scope="row">{{index}}</th>-->
-                <td>{{item.refereeName}}</td>
-                <td>{{item.refereePhoto}}</td>
-                <td>{{item.refereeDescribe}}</td>
-                <td><span class="text_operate" @click="deleteConfirm(index)">delete</span></td>
+                <th scope="row">{{item.matchName}}</th>
+                <td>{{item.matchType}}</td>
+                <td>{{item.matchTime}}</td>
+                <td>{{item.matchPlace}}</td>
+                <td>{{item.status}}</td>
+                <td><span class="text_operate">查看详情</span></td>
             </tr>
             </tbody>
         </table>
@@ -54,7 +56,7 @@
         </nav>
     </div>
 </div>
-<script type="text/javascript" src="../js/match_referee_delete.js"></script>
+<script type="text/javascript" src="../js/match_modify.js"></script>
 
 </body>
 </html>

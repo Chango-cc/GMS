@@ -18,8 +18,13 @@ public interface MatchDao {
     int queryMatchNum();
     List<Match> queryMatch();
     Match queryMatchById(int id);
-    List<Match> queryMatchByUser(int id);
+    List<Match> queryMatchByUser(String id,int offset,int length);
     List<Match> queryMatchByStatus(String status);
+    int queryMatchNumByCondition1(String[] type);
+    int queryMatchNumByCondition2(String status,String[] type);
+    List<Match> queryMatchByCondition1(int offset,int length,String[] type);
+    List<Match> queryMatchByCondition2(int offset,int length,String status,String[] type);
+    List<Match> queryMatchByCondition3(int offset,int length,String[] type);
     List<Match> queryMatchLimit(int offset,int length);
     //Referee
     boolean addReferee(Referee referee);

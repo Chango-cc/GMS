@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 public class Match {
     String matchId;
     String matchName;
-    Timestamp matchTime;
-    String matchPlace;
-    String matchTools;
+    Timestamp matchTime;//
+    String matchPlace;//
+    String matchTools;//
     String matchType;
     String matchDescribe;
     String userId;
