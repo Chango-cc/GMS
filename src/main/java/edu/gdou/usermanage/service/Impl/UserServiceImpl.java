@@ -37,8 +37,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Gmsuser> implements 
 
     @Override
     public void register(Gmsuser gmsuser) {
-        gmsuser.setUser_admin("0");//默认是学生在注册
-        gmsuser.setUser_position("学生");//默认是学生在注册
+        gmsuser.setUserAdmin("0");//默认是学生在注册
+        gmsuser.setUserPosition("学生");//默认是学生在注册
 //        gmsuser.setUser_question(null);
         gmsuser.setState("在读");
       userMapper.insert(gmsuser);
@@ -89,20 +89,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Gmsuser> implements 
     @Override
     public void updateUser(Gmsuser gmsuser) {
         gmsuser.setId(gmsuser.getId());
-        if(gmsuser.getUser_position().equals("场地管理员")){
-            gmsuser.setUser_admin("1");
+        if(gmsuser.getUserPosition().equals("场地管理员")){
+            gmsuser.setUserAdmin("1");
             gmsuser.setState("在职");
-        }else if(gmsuser.getUser_position().equals("器材管理员")){
-            gmsuser.setUser_admin("2");
+        }else if(gmsuser.getUserPosition().equals("器材管理员")){
+            gmsuser.setUserAdmin("2");
             gmsuser.setState("在职");
-        }else if(gmsuser.getUser_position().equals("赛事管理员")){
-            gmsuser.setUser_admin("3");
+        }else if(gmsuser.getUserPosition().equals("赛事管理员")){
+            gmsuser.setUserAdmin("3");
             gmsuser.setState("在职");
-        }else if(gmsuser.getUser_position().equals("超级管理员")){
-            gmsuser.setUser_admin("4");
+        }else if(gmsuser.getUserPosition().equals("超级管理员")){
+            gmsuser.setUserAdmin("4");
             gmsuser.setState("在职");
         }else {
-            gmsuser.setUser_admin("0");
+            gmsuser.setUserAdmin("0");
             gmsuser.setState("在读");
         }
         userMapper.updateById(gmsuser);

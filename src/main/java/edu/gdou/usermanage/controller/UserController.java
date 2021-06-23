@@ -42,9 +42,9 @@ public class UserController {
     public void updateUser(Integer id,String updateUserName,String updateUserPosition,String updateUserTel){
         Gmsuser updateuser=new Gmsuser();
         updateuser.setId(id);
-        updateuser.setUser_name(updateUserName);
-        updateuser.setUser_position(updateUserPosition);
-        updateuser.setUser_tel(updateUserTel);
+        updateuser.setUserName(updateUserName);
+        updateuser.setUserPosition(updateUserPosition);
+        updateuser.setUserTel(updateUserTel);
         userService.updateUser(updateuser);
     }
     @RequestMapping("refreshList")
@@ -108,8 +108,8 @@ public class UserController {
         //先查询是否已存在相同名字和学号的人
         List<Gmsuser> users =userService.selectAll();//查询全部用户
         for(int i=0;i<users.size();i++){
-           if(users.get(i).getUser_name().equals(gmsuser.getUser_name())
-                   || users.get(i).getUser_id().equals(gmsuser.getUser_id())) {
+           if(users.get(i).getUserName().equals(gmsuser.getUserName())
+                   || users.get(i).getUserId().equals(gmsuser.getUserId())) {
                isRegiste=true;//已注册
            }
         };

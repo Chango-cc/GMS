@@ -20,18 +20,17 @@ public class Gmsuser {
     private Integer id;//自增id
 
     @TableField(value = "user_id")
-    private String user_id;//一卡通/
+    private String userId;//一卡通/
 
-    private String user_name;//名字//
-    private String user_password;//密码
-    private String user_cardno;//身份证
-    private String user_tel;//电话号码
-    private String user_admin;//用户身份
-    private String user_position;//用户身份职位
-    private String user_question;//
-    private String user_answer;//
+    private String userName;//名字//
+    private String userPassword;//密码
+    private String userCardno;//身份证
+    private String userTel;//电话号码
+    private String userAdmin;//用户身份
+    private String userPosition;//用户身份职位
+    private String userQuestion;//
+    private String userAnswer;//
     private String state;//用户在职状态
-
 
     public Integer getId() {
         return id;
@@ -41,76 +40,76 @@ public class Gmsuser {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    public String getUser_cardno() {
-        return user_cardno;
+    public String getUserCardno() {
+        return userCardno;
     }
 
-    public void setUser_cardno(String user_cardno) {
-        this.user_cardno = user_cardno;
+    public void setUserCardno(String userCardno) {
+        this.userCardno = userCardno;
     }
 
-    public String getUser_tel() {
-        return user_tel;
+    public String getUserTel() {
+        return userTel;
     }
 
-    public void setUser_tel(String user_tel) {
-        this.user_tel = user_tel;
+    public void setUserTel(String userTel) {
+        this.userTel = userTel;
     }
 
-    public String getUser_admin() {
-        return user_admin;
+    public String getUserAdmin() {
+        return userAdmin;
     }
 
-    public void setUser_admin(String user_admin) {
-        this.user_admin = user_admin;
+    public void setUserAdmin(String userAdmin) {
+        this.userAdmin = userAdmin;
     }
 
-    public String getUser_position() {
-        return user_position;
+    public String getUserPosition() {
+        return userPosition;
     }
 
-    public void setUser_position(String user_position) {
-        this.user_position = user_position;
+    public void setUserPosition(String userPosition) {
+        this.userPosition = userPosition;
     }
 
-    public String getUser_question() {
-        return user_question;
+    public String getUserQuestion() {
+        return userQuestion;
     }
 
-    public void setUser_question(String user_question) {
-        this.user_question = user_question;
+    public void setUserQuestion(String userQuestion) {
+        this.userQuestion = userQuestion;
     }
 
-    public String getUser_answer() {
-        return user_answer;
+    public String getUserAnswer() {
+        return userAnswer;
     }
 
-    public void setUser_answer(String user_answer) {
-        this.user_answer = user_answer;
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
     }
 
     public String getState() {
@@ -125,15 +124,15 @@ public class Gmsuser {
     public String toString() {
         return "Gmsuser{" +
                 "id=" + id +
-                ", user_id='" + user_id + '\'' +
-                ", user_name='" + user_name + '\'' +
-                ", user_password='" + user_password + '\'' +
-                ", user_cardno='" + user_cardno + '\'' +
-                ", user_tel='" + user_tel + '\'' +
-                ", user_admin='" + user_admin + '\'' +
-                ", user_position='" + user_position + '\'' +
-                ", user_question='" + user_question + '\'' +
-                ", user_answer='" + user_answer + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userCardno='" + userCardno + '\'' +
+                ", userTel='" + userTel + '\'' +
+                ", userAdmin='" + userAdmin + '\'' +
+                ", userPosition='" + userPosition + '\'' +
+                ", userQuestion='" + userQuestion + '\'' +
+                ", userAnswer='" + userAnswer + '\'' +
                 ", state='" + state + '\'' +
                 '}';
     }
