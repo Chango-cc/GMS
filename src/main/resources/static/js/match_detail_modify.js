@@ -38,12 +38,13 @@ const app = new Vue({
         submitInfo() {
             const object=this;
             $.ajax({
-                url: "../match/censorMatchPass",
+                url: "../match/updateMatch",
                 contentType: "application/json;charset=UTF-8",
                 data:{"match":object.match},
                 type: "post",
                 success: function (result) {
                     console.log(result);
+                    alert("提交成功");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);

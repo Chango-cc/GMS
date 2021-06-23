@@ -64,7 +64,7 @@ public class MatchServiceImp implements MatchService{
     public int queryMatchNumByCondition(String status, String type) {
         String[] types=type.split(",");
         if (status.equals("all"))
-            return matchDao.queryMatchNumByCondition1(types);
+            return matchDao.queryMatchNumByConditionOne(types);
         else return matchDao.queryMatchNumByCondition2(status,types);
     }
     @Override

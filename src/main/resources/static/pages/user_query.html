@@ -120,12 +120,12 @@
                                                     <div class="mb-3">
                                                         <div class="input-group is-invalid">
                                                             <div class="input-group-prepend">
-                                                                <label class="input-group-text" for="validatedInputGroupSelect">
+                                                                <label class="input-group-text" :for="'validatedInputGroupSelect'+(index)">
                                                                     <!--                                        <i class="fa fa-hospital-o" aria-hidden="true"></i>-->
                                                                     &nbsp;&nbsp;用户身份
                                                                 </label>
                                                             </div>
-                                                            <select class="custom-select" id="validatedInputGroupSelect" name="user_position" v-model="updateUserPosition" required>
+                                                            <select class="custom-select" :id="'validatedInputGroupSelect'+(index)" name="user_position" v-model="updateUserPosition" required>
                                                                 <option >超级管理员</option>
                                                                 <option >场地管理员</option>
                                                                 <option >器材管理员</option>
@@ -141,12 +141,12 @@
                                                     <div class="mb-3">
                                                         <div class="input-group is-invalid">
                                                             <div class="input-group-prepend">
-                                                                <label class="input-group-text" for="validatedInputGroupSelectt">
+                                                                <label class="input-group-text" :for="'validatedInputGroupSelectt'+(index)">
                                                                     <!--                                        <i class="fa fa-spinner" aria-hidden="true"></i>-->
                                                                     &nbsp;&nbsp;用户电话
                                                                 </label>
                                                             </div>
-                                                            <input class="custom-select" id="validatedInputGroupSelectt" name="user_tel" v-model="updateUserTel"  required>
+                                                            <input class="custom-select" :id="'validatedInputGroupSelectt'+(index)" name="user_tel" v-model="updateUserTel"  required>
                                                         </div>
                                                         <!--                                        <div class="invalid-feedback">-->
                                                         <!--                                            Example invalid input group feedback-->

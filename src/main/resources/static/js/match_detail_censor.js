@@ -40,9 +40,8 @@ const app = new Vue({
                 data:{"id":object.getQueryString("id")},
                 type: "get",
                 success: function (result) {
-                    object.match=result;
-                    object.getReferee();
                     console.log(object.match);
+                    alert("审核成功")
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);

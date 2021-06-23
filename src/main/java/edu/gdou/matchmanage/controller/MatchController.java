@@ -148,7 +148,7 @@ public class MatchController {
     @RequestMapping("updateMatch")
     @ResponseBody
     public boolean updateMatch(@RequestBody Match match) {
-//        System.out.println(match);
+        System.out.println(match);
         return service.updateMatch(match);
     }
     @RequestMapping("censorMatchPass")

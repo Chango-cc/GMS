@@ -9,11 +9,12 @@ new Vue({
         list: [],
     },
     methods: {
-        getData(object,offset,length){
+        getData(){
+            const object=this;
             $.ajax({
                 url: "../match/queryRefereeL",
                 contentType: "application/json;charset=UTF-8",
-                data: {"offset":offset,"length":length},
+                data: {"offset":(object.page-1)*object.length,"length":object.length},
                 type: "get",
                 success: function (result) {
                     object.list=result;
@@ -46,15 +47,16 @@ new Vue({
         },
         deleteRecord(index){
             console.log(index);
-            // this.list[index].refereeId;
+            const object=this;
             $.ajax({
                 url: "../match/removeReferee",
                 contentType: "application/json;charset=UTF-8",
-                data: {"index":this.list[index].refereeId},
+                data: {"index":object.list[index].refereeId},
                 type: "get",
                 success: function (result) {
                     console.log(result);
                     alert("删除成功");
+                    object.getData();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
@@ -92,6 +94,6 @@ new Vue({
     },
     mounted() {
         this.getNum(this);
-        this.getData(this,(this.page-1)*this.length,this.length);
+        this.getData();
     },
 })

@@ -40,7 +40,7 @@
         SELECT *
         FROM gms.match limit #{offset},#{length};
     </select>
-    <select id="queryMatchNumByCondition1" resultType="int">
+    <select id="queryMatchNumByConditionOne" resultType="int">
         SELECT COUNT(*)
         FROM gms.match where match_type in
         <foreach  item="item" collection="type" index="index"  open="(" separator="," close=")">
