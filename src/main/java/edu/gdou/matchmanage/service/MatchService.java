@@ -7,17 +7,22 @@ import java.util.List;
 
 public interface MatchService {
     boolean addMatch(Match match);
-    boolean deleteMatch(Match match);
+    boolean deleteMatch(int id);
+    boolean updateMatch(Match match);
+    boolean updateMatchStatus(int id,String status);
     int queryMatchNum();
     List<Match> queryMatch();
     Match queryMatchById(int id);
-    List<Match> queryMatchByUser(int id);
+    List<Match> queryMatchByUser(String id,int offset,int length);
     List<Match> queryMatchByStatus(String status);
+    int queryMatchNumByCondition(String status, String type);
+    List<Match> queryMatchByCondition(int offset,int length,String status,String type);
     List<Match> queryMatchLimit(int offset,int length);
 
     boolean addReferee(Referee referee);
     boolean deleteReferee(int id);
     int queryRefereeNum();
     List<Referee> queryReferee();
+    List<Referee> queryRefereeByType(String type);
     List<Referee> queryRefereeLimit(int offset,int length);
 }

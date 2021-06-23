@@ -18,16 +18,16 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">姓名</th>
-                <th scope="col">类型</th>
-                <th scope="col">描述</th>
-                <th scope="col">操作</th>
+<!--                <th scope="col" width="">#</th>-->
+                <th scope="col" width="15%">姓名</th>
+                <th scope="col" width="20%">类型</th>
+                <th scope="col" width="50%">描述</th>
+                <th scope="col" width="15%">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(item,index) in list" :key="index" :content="item">
-                <th scope="row">{{index}}</th>
+<!--                <th scope="row">{{index}}</th>-->
                 <td>{{item.refereeName}}</td>
                 <td>{{item.refereePhoto}}</td>
                 <td>{{item.refereeDescribe}}</td>
@@ -42,7 +42,7 @@
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
-                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)">
+                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="index">
                     <a class="page-link">{{index}}</a>
                 </li>
                 <li class="page-item" @click="nextPage()">

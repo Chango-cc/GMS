@@ -1,60 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
-  <!--    <link rel="stylesheet" href="../css/main.css">-->
-  <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
-  <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="../js/vue.js"></script>
-  <link rel="stylesheet" href="../css/match_query.css">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/match_censor.css">
+    <title>Title</title>
 </head>
 <body>
 
 <div class="bg-white" style="padding: 10px 10px 10px 20px;">赛事管理>>赛事查询</div>
 <div class="content_body">
-  <div id="table_match" class="table_body bg-white">
-    <table class="table table-bordered">
-      <thead>
-      <tr>
-        <th scope="col" width="20%">名称</th>
-        <th scope="col" width="11%">类型</th>
-        <th scope="col" width="25%">时间</th>
-        <th scope="col" width="20%">地点</th>
-        <th scope="col" width="12%">状态</th>
-        <th scope="col" width="12%">详情</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(item,index) in list" :key="index" :content="item">
-        <th scope="row">{{item.matchName}}</th>
-        <td>{{item.matchType}}</td>
-        <td>{{item.matchTime}}</td>
-        <td>{{item.matchPlace}}</td>
-        <td>{{item.status}}</td>
-        <td><span class="text_operate">查看详情</span></td>
-      </tr>
-      </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-      <ul id="ul_pages" class="pagination justify-content-end">
-        <li class="page-item" @click="previousPage()">
-          <a class="page-link" aria-label="Previous">
-            <span aria-hidden="true">&lt;</span>
-          </a>
-        </li>
-        <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="index">
-          <a class="page-link">{{index}}</a>
-        </li>
-        <li class="page-item" @click="nextPage()">
-          <a class="page-link">
-            <span aria-hidden="true">&gt;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+    <div id="table_match" class="table_body bg-white">
+        <div id="filter_status">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h3 class="mb-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-funnel" viewBox="0 0 16 16">
+                                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                            </svg>
+                            <small data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                   aria-controls="collapseOne">Filter</small>
+                        </h3>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                         data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="filter_option">
+                                <span>状态：</span>
+                                <div v-for="(item,index) of radios" :key="index" :content="item" class="form-check form-check-inline">
+                                    <input v-model="picked" class="form-check-input" type="radio" name="inlineRadioOptions" :id="item.id" :value="item.name">
+                                    <label class="form-check-label" :for="item.id">{{item.name}}</label>
+                                </div>
+                            </div>
+                            <div class="filter_option">
+                                <span>类型：</span>
+                                <div v-for="(item,index) of checkboxes" :key="index" :content="item" class="form-check form-check-inline" >
+                                    <input v-model:checked="item.checked" class="form-check-input" type="checkbox" :id="item.id" value="option1">
+                                    <label class="form-check-label" :for="item.id">{{item.name}}</label>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <div style="padding-right: 10px"><button type="button" class="btn btn-primary btn-sm" @click="getDataByCondition()">Apply Filter</button></div>
+                                    <div style="padding-right: 10px"><button type="button" class="btn btn-secondary btn-sm" @click="reset()">Reset</button></div>
+                                </div>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" width="20%">名称</th>
+                <th scope="col" width="11%">类型</th>
+                <th scope="col" width="25%">时间</th>
+                <th scope="col" width="20%">地点</th>
+                <th scope="col" width="12%">状态</th>
+                <th scope="col" width="12%">详情</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in list" :key="index" :content="item">
+                <th scope="row">{{item.matchName}}</th>
+                <td>{{item.matchType}}</td>
+                <td>{{item.matchTime}}</td>
+                <td>{{item.matchPlace}}</td>
+                <td>{{item.status}}</td>
+                <td><a class="text_operate" :id="item.matchId" :href="'censorMatchDetail?id='+(item.matchId)">查看详情</a></td>
+<!--                <td><span class="text_operate" @click="detailPage(item.matchId)" :id="item.matchId">查看详情</span></td>-->
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul id="ul_pages" class="pagination justify-content-end">
+                <li class="page-item" @click="previousPage()">
+                    <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="index">
+                    <a class="page-link">{{index}}</a>
+                </li>
+                <li class="page-item" @click="nextPage()">
+                    <a class="page-link">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 <script type="text/javascript" src="../js/match_censor.js"></script>
 

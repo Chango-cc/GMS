@@ -14,12 +14,25 @@ public class MatchServiceImp implements MatchService{
     private MatchDao matchDao;
     @Override
     public boolean addMatch(Match match) {
+        match.setStatus("待审核");
         return matchDao.addMatch(match);
     }
 
     @Override
-    public boolean deleteMatch(Match match) {
-        return matchDao.deleteMatch(match);
+    public boolean deleteMatch(int id) {
+        return matchDao.deleteMatch(id);
+    }
+
+    @Override
+    public boolean updateMatch(Match match) {
+        match.setStatus("待审核");
+        return matchDao.updateMatch(match);
+    }
+
+    @Override
+    public boolean updateMatchStatus(int id, String status) {
+        status="已审核";
+        return matchDao.updateMatchStatus(id,status);
     }
 
     @Override
@@ -38,13 +51,29 @@ public class MatchServiceImp implements MatchService{
     }
 
     @Override
-    public List<Match> queryMatchByUser(int id) {
-        return matchDao.queryMatchByUser(id);
+    public List<Match> queryMatchByUser(String id,int offset,int length) {
+        return matchDao.queryMatchByUser(id,offset,length);
     }
 
     @Override
     public List<Match> queryMatchByStatus(String status) {
         return matchDao.queryMatchByStatus(status);
+    }
+
+    @Override
+    public int queryMatchNumByCondition(String status, String type) {
+        String[] types=type.split(",");
+        if (status.equals("all"))
+            return matchDao.queryMatchNumByConditionOne(types);
+        else return matchDao.queryMatchNumByCondition2(status,types);
+    }
+    @Override
+    public List<Match> queryMatchByCondition(int offset, int length, String status, String type) {
+        String[] types=type.split(",");
+        if (status.equals("all")){
+            List<Match> list=matchDao.queryMatchByCondition1(offset, length, types);
+            return list;}
+        else return matchDao.queryMatchByCondition2(offset, length, status, types);
     }
 
     @Override
@@ -70,6 +99,11 @@ public class MatchServiceImp implements MatchService{
     @Override
     public List<Referee> queryReferee() {
         return matchDao.queryReferee();
+    }
+
+    @Override
+    public List<Referee> queryRefereeByType(String type) {
+        return matchDao.queryRefereeByType(type);
     }
 
     @Override
