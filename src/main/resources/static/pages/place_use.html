@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <!--    <link rel="stylesheet" href="../css/main.css">-->
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/place_keep.css">
+    <!--    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <title>Title</title>
+</head>
+<body>
+<div class="container" id="table_placeUse">
+    <div class="card card-margin">
+        <div class="card-header">
+            <i class="fa fa-filter" aria-hidden="true">&nbsp;筛选内容</i>
+            <span>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-search " aria-hidden="true" style="cursor: pointer" @click="sentSelect()">&nbsp;查询</i>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-file-text-o " aria-hidden="true" style="cursor: pointer">&nbsp;导出</i>
+                         <i class="fa fa-chevron-down  align-items-center" aria-hidden="true" data-toggle="collapse" href="#collapse" style="cursor: pointer"></i>
+                     </span>
+
+        </div>
+        <div id="collapse" class="collapse show" >
+            <div class="card-body row">
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selecttype" class="label-margin"  >场地楼层</label>
+                    <select id="selecttype" class="selection-width" v-model="storey">
+                        <option selected>请选择场地楼层</option>
+                        <option >一楼</option>
+                        <option >二楼</option>
+                        <option >三楼</option>
+                    </select>
+                </div>
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selecttype2" class="label-margin"  >场地类型</label>
+                    <select id="selecttype2" class="selection-width" v-model="type">
+                        <option selected>请选择场地类型</option>
+                        <option >篮球场</option>
+                        <option >羽毛球场</option>
+                        <option >排球场</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-margin"  >
+        <div class="card-header">
+            <div>
+                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>场地信息列表</span>
+            </div>
+            <div style="cursor: pointer">
+                <i id="refresh" class="fa fa-refresh " aria-hidden="true" ></i>
+                <label for="refresh"  style="margin:0px;">刷新</label>
+            </div>
+        </div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li :class="act">
+                <a href="#tab-first" role="tab" data-toggle="tab" @click="sentChecked('待审核')">待审核</a>
+            </li>
+            <li>
+                <a href="#tab-eighth" role="tab" data-toggle="tab" @click="sentChecked('已通过')">已通过</a>
+            </li>
+            <li>
+                <a href="#tab-second" role="tab" data-toggle="tab" @click="sentChecked('审核不通过')">审核不通过</a>
+            </li>
+            <li>
+                <a href="#tab-third" role="tab" data-toggle="tab" @click="sentChecked('待使用')">待使用</a>
+            </li>
+            <li>
+                <a href="#tab-fourth" role="tab" data-toggle="tab" @click="sentChecked('已使用')">已使用</a>
+            </li>
+            <li>
+                <a href="#tab-fifth" role="tab" data-toggle="tab" @click="sentChecked('已退订')">已退订</a>
+            </li>
+            <li>
+                <a href="#tab-sixth" role="tab" data-toggle="tab" @click="sentChecked('已失约')">已失约</a>
+            </li>
+            <li>
+                <a href="#tab-seventh" role="tab" data-toggle="tab" @click="sentChecked('待审核')">已完成</a>
+            </li>
+        </ul>
+        <!--标签的内容-->
+        <div class="tab-content">
+            <div class="tab-pane in active" id="tab-first">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">序号</th>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">申请日期</th>
+                                    <th scope="col">申请时间段</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>
+                                        {{index}}
+                                    </th>
+                                    <td>{{item.placeNo}}</td>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                    <td>
+                                        <div  class="placeoption">
+                                            <a href="#" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
+                                            <a href="#" class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="applyDelete(item.applyId)"></i></a>
+                                            <a href="#" class="badge badge-success"><i class="fa fa-check-square fa-2x" aria-hidden="true" @click="applySuccess(item.applyId)"></i></a>
+                                            <a href="#" class="badge badge-danger"><i class="fa fa-times-circle fa-2x" aria-hidden="true" @click="applyFail(item.applyId)"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eighth">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">申请日期</th>
+                                    <th scope="col">申请时间段</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>{{item.placeNo}}</th>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                    <td>
+                                        <div  class="placeoption">
+                                            <a href="#" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
+                                            <a href="#" class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="applyDelete(item.applyId)"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-second">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">可用日期</th>
+                                    <th scope="col">可用时间段</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>{{item.placeNo}}</th>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                    <td>
+                                        <div  class="placeoption">
+                                            <a href="#" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-third">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">可用日期</th>
+                                    <th scope="col">可用时间段</th>
+                                    <th scope="col">开始计时</th>
+                                    <th scope="col">结束计时</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>{{item.placeNo}}</th>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                    <td>{{item.applyStart}}</td>
+                                    <td>{{item.applyEnd}}</td>
+                                    <td>
+                                        <div  class="placeoption">
+                                            <a href="#" class="badge badge-info"><i class="fa fa-toggle-off fa-2x" aria-hidden="true" :id="'in'+index" @click="setTime(item.applyId,index,item.applyStart,item.applyEnd,item.applyPeriod)"></i></a>
+                                            <a href="#" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
+                                            <a href="#" class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="applyDelete(item.applyId)"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-fourth">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">序号</th>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">使用日期</th>
+                                    <th scope="col">使用时间段</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>
+                                        {{index+1}}
+                                    </th>
+                                    <td>{{item.placeNo}}</td>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                    <td>
+                                        <div  class="placeoption">
+                                            <a href="#" class="badge badge-info"><i class="fa fa-money fa-2x" aria-hidden="true" @click="applyPay(item.applyId)"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-fifth">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">序号</th>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">申请日期</th>
+                                    <th scope="col">申请时间段</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>
+                                        {{index+1}}
+                                    </th>
+                                    <td>{{item.placeNo}}</td>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-sixth">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">序号</th>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">申请日期</th>
+                                    <th scope="col">申请时间段</th>
+                                    <th scope="col">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>
+                                        {{index+1}}
+                                    </th>
+                                    <td>{{item.placeNo}}</td>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                    <td>
+                                        <div  class="placeoption">
+                                            <a href="#" class="badge badge-info"><i class="fa fa-money fa-2x" aria-hidden="true" @click="applyPay(item.applyId)"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-seventh">
+                <div class="container ">
+                    <div class="row widt">
+                        <div style="padding: 20px">
+                            <table class="table ">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">序号</th>
+                                    <th scope="col">场地编号</th>
+                                    <th scope="col">场地类型</th>
+                                    <th scope="col">场地楼层</th>
+                                    <th scope="col">使用日期</th>
+                                    <th scope="col">使用时间段</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                    <th>
+                                        {{index+1}}
+                                    </th>
+                                    <td>{{item.placeNo}}</td>
+                                    <td>{{item.placeType}}</td>
+                                    <td>{{item.placeStorey}}</td>
+                                    <td>{{item.applyDate  | formatDate }}</td>
+                                    <td>{{item.applyPeriod}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/place_use.js"></script>
+</body>
+</html>

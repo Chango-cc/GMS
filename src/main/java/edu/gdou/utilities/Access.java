@@ -18,7 +18,7 @@ public class Access {
         childMenu=new ChildMenu("0","裁判删除",3,"match/deleteReferee",0b10001);list.add(childMenu);
         childMenu=new ChildMenu("0","场地总览",1,"place/toPlace",0b11111);list.add(childMenu);
         childMenu=new ChildMenu("0","场地预约",1,"place/toPlaceKeep",0b11111);list.add(childMenu);
-        childMenu=new ChildMenu("0","添加场地",1,"match/deleteReferee",0b11111);list.add(childMenu);
+        childMenu=new ChildMenu("0","场地用况",1,"place/toPlaceUse",0b11111);list.add(childMenu);
         childMenu=new ChildMenu("0","删除场地",1,"match/deleteReferee",0b11111);list.add(childMenu);
         return list;
     }

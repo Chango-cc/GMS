@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <!--    <link rel="stylesheet" href="../css/main.css">-->
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/place_keep.css">
+    <!--    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <title>Title</title>
+</head>
+<body>
+<div class="container" id="table_placeKeep">
+    <div class="card card-margin">
+        <div class="card-header">
+            <i class="fa fa-filter" aria-hidden="true">&nbsp;筛选内容</i>
+            <span>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-search " aria-hidden="true" style="cursor: pointer" @click="sentChecked()">&nbsp;查询</i>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-file-text-o " aria-hidden="true" style="cursor: pointer">&nbsp;导出</i>
+                         <i class="fa fa-chevron-down  align-items-center" aria-hidden="true" data-toggle="collapse" href="#collapse" style="cursor: pointer"></i>
+                     </span>
+
+        </div>
+        <div id="collapse" class="collapse show" >
+            <ul class="nav nav-tabs" role="tablist">
+                <li v-for="(item,index) in dateList" :key="index" :content="item" >
+                    <a :href="'#a'+index" role="tab" data-toggle="tab" >{{item.date}}</a>
+                </li>
+            </ul>
+            <!--标签的内容-->
+            <div class="tab-content" >
+                <div class="tab-pane" id="a0" >
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList0" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time0'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time0'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="a1">
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList1" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time1'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time1'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="a2">
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList2" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time2'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time2'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="a3">
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList3" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time3'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time3'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="a4">
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList4" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time4'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time4'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="a5">
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList5" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time5'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time5'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="a6">
+                    <div class="container " >
+                        <div class="row">
+                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList6" :key="index" :content="item">
+                                <input type="checkbox" class="custom-control-input" :id="'time6'+index" name="example1" v-model="item.active">
+                                <label class="custom-control-label" :for="'time6'+index">{{item.time}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body row">
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selectstorey"  class="label-margin">场地楼层</label>
+                    <select id="selectstorey" class="selection-width" v-model="storey">
+                        <option selected>请选择场地楼层</option>
+                        <option >一楼</option>
+                        <option >二楼</option>
+                        <option >三楼</option>
+                    </select>
+                </div>
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selecttype" class="label-margin"  >场地类型</label>
+                    <select id="selecttype" class="selection-width" v-model="type" >
+                        <option selected>请选择场地类型</option>
+                        <option >篮球场</option>
+                        <option >羽毛球场</option>
+                        <option >排球场</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-margin"  >
+        <div class="card-header">
+            <div>
+                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>场地信息列表</span>
+            </div>
+            <div style="cursor: pointer">
+                <i id="square" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop" @click="toKeep()"></i>
+                <label for="square"  class="label-margin" >预约场地</label>
+                &nbsp;&nbsp;
+                <i id="refresh" class="fa fa-refresh " aria-hidden="true" ></i>
+                <label for="refresh"  style="margin:0px;">刷新</label>
+            </div>
+        </div>
+        <div style="padding: 20px">
+            <table class="table " id="msgtable">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">状态</th>
+                    <th scope="col">场地编号</th>
+                    <th scope="col">场地类型</th>
+                    <th scope="col">场地楼层</th>
+                    <th scope="col">可用日期</th>
+                    <th scope="col">可用时间段</th>
+                    <th scope="col">场地负责人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in list" :key="index" :content="item">
+                    <th>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" :id="index" class="custom-control-input " @click="chooseToKeep(index)"  >
+                            <label :for="index" class="custom-control-label"></label>
+                        </div>
+                    </th>
+                    <td>{{item.placeNo}}</td>
+                    <td>{{item.placeType}}</td>
+                    <td>{{item.placeStorey}}</td>
+                    <td>{{item.applyDate}}</td>
+                    <td>{{item.applyPeriod}}</td>
+                    <td>{{item.placeManage}}</td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="card-footer text-muted">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/place_keep.js"></script>
+</body>
+</html>

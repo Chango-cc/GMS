@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan(value = "edu.gdou.placemange.mapper")
 @MapperScan("edu.gdou.usermanage.mapper")
 @MapperScan("edu.gdou.matchmanage.dao")
 public class GmsApplication {
