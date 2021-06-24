@@ -1,5 +1,6 @@
 package edu.gdou.placemange.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import edu.gdou.placemange.entity.PlaceNotice;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,9 @@ public interface PlaceNoticeService extends IService<PlaceNotice> {
 
     public List<PlaceNotice> PlaceNoticeSelect(String noticeTitle, String noticeContent, String noticeDate);
 
+    /*
+    查询场地公告
+     */
+    public IPage<PlaceNotice> PlaceNoticeSelecting(Integer current , Integer size);
 
 }

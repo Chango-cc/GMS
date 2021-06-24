@@ -55,7 +55,7 @@
                 <i id="square" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop" ></i>
                 <label for="square"  class="label-margin" >添加场地</label>
                 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog ">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="staticBackdropLabel">
@@ -161,9 +161,9 @@
                     <td>{{item.placeManage}}</td>
                     <td>
                         <div  class="placeoption">
-                            <a href="#" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true" @click="placeEdit(item.placeId)" data-toggle="modal" data-target="#staticBackdropEdit"></i></a>
+                            <a  class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true" @click="placeEdit(item.placeId)" data-toggle="modal" data-target="#staticBackdropEdit"></i></a>
                             <div class="modal fade" id="staticBackdropEdit" data-backdrop="static" data-keyboard="false" tabindex="-1" :aria-labelledby="index" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" :id="index">
@@ -242,7 +242,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="placeDelete(item.placeId)"></i></a>
+                            <a  class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="placeDelete(item.placeId)"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -252,14 +252,14 @@
         <div class="card-footer text-muted">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    <li class="page-item " >
+                        <a class="page-link"  tabindex="-1"  @click="turnpagepre()">Previous</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item" v-for="index in totalpage" :key="index" :content="item" :class="(current == (index )) ? 'active' : '' ">
+                        <a class="page-link"  @click="turnpage(index)">{{index}}</a>
+                    </li>
                     <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a class="page-link"  @click="turnpagenext()">Next</a>
                     </li>
                 </ul>
             </nav>

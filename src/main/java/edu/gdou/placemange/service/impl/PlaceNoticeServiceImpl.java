@@ -2,7 +2,10 @@ package edu.gdou.placemange.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import edu.gdou.placemange.entity.PlaceApply;
 import edu.gdou.placemange.entity.PlaceNotice;
 import edu.gdou.placemange.mapper.PlaceNoticeMapper;
 import edu.gdou.placemange.service.PlaceNoticeService;
@@ -72,5 +75,33 @@ public class PlaceNoticeServiceImpl extends ServiceImpl<PlaceNoticeMapper, Place
         List<PlaceNotice> list = placeNoticeMapper.selectList(queryWrapper);
         list.forEach(placeNotice ->System.out.println(placeNotice));
         return list;
+    }
+
+    /*
+    普通的场地查询
+     */
+    @Override
+    public IPage<PlaceNotice> PlaceNoticeSelecting(Integer current , Integer size){
+
+        QueryWrapper<PlaceNotice> queryWrapper = new QueryWrapper<>();
+        Map<String,Object> map = new HashMap<>();
+        //组装条件
+        queryWrapper.eq("notice_state","已发布");
+        //查询
+        IPage<PlaceNotice> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+        IPage<PlaceNotice> result=placeNoticeMapper.selectPage(page,queryWrapper);
+        List<PlaceNotice> placeNotices = result.getRecords();
+        System.out.println("palaces.size=---  " + placeNotices.size());
+        long pages = result.getPages();
+        System.out.println("页数：  " + pages);
+        System.out.println("总记录数--  "+result.getTotal());
+        System.out.println("当前页码：    " + result.getCurrent());
+        System.out.println("每页的纪录数： " + result.getSize());
+//        List<PlaceNotice> list = placeNoticeMapper.selectList(queryWrapper);
+        placeNotices.forEach(placeNotice ->System.out.println(placeNotice));
+        return result;
+
     }
 }

@@ -25,6 +25,10 @@ public class PlaceNotice {
     private Date noticeDate;
     @TableField(value = "notice_state")
     private String noticeState;
+    @TableField(value = "place_manageid")
+    private String placeManageid;
+    @TableField(value = "place_manage")
+    private String placeManage;
 
     public Integer getNoticeId() {
         return noticeId;
@@ -66,6 +70,22 @@ public class PlaceNotice {
         this.noticeState = noticeState;
     }
 
+    public String getPlaceManageid() {
+        return placeManageid;
+    }
+
+    public void setPlaceManageid(String placeManageid) {
+        this.placeManageid = placeManageid;
+    }
+
+    public String getPlaceManage() {
+        return placeManage;
+    }
+
+    public void setPlaceManage(String placeManage) {
+        this.placeManage = placeManage;
+    }
+
     @Override
     public String toString() {
         return "PlaceNotice{" +
@@ -74,6 +94,8 @@ public class PlaceNotice {
                 ", noticeContent='" + noticeContent + '\'' +
                 ", noticeDate=" + noticeDate +
                 ", noticeState='" + noticeState + '\'' +
+                ", placeManageid='" + placeManageid + '\'' +
+                ", placeManage='" + placeManage + '\'' +
                 '}';
     }
 }

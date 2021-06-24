@@ -2,6 +2,8 @@ package edu.gdou.placemange.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.gdou.placemange.entity.Place;
 import edu.gdou.placemange.mapper.PlaceMapper;
@@ -39,7 +41,7 @@ public class PlaceServiceImpl extends ServiceImpl<PlaceMapper, Place> implements
     }
 
     @Override
-    public List<Place> PlaceIdSelect(String placeStorey, String placeType, String placeState) {
+    public IPage<Place> PlaceIdSelect(Integer current, Integer size ,  String placeStorey, String placeType, String placeState) {
 
         QueryWrapper<Place> queryWrapper = new QueryWrapper<>();
         Map<String,Object> map = new HashMap<>();
@@ -49,9 +51,20 @@ public class PlaceServiceImpl extends ServiceImpl<PlaceMapper, Place> implements
         map.put("place_type",placeType);
         queryWrapper.allEq(map,false).or().eq("place_state","维修中");
 
-        List<Place> list = placeMapper.selectList(queryWrapper);
-        list.forEach(place ->System.out.println(place));
-        return list;
+        IPage<Place> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+        IPage<Place> result=placeMapper.selectPage(page,queryWrapper);
+        List<Place> places = result.getRecords();
+        System.out.println("palaces.size=---  " + places.size());
+        long pages = result.getPages();
+        System.out.println("页数：  " + pages);
+        System.out.println("总记录数--  "+result.getTotal());
+        System.out.println("当前页码：    " + result.getCurrent());
+        System.out.println("每页的纪录数： " + result.getSize());
+//        List<Place> list = placeMapper.selectList(queryWrapper);
+        places.forEach(place ->System.out.println(place));
+        return result;
     }
 
     @Override
@@ -71,12 +84,9 @@ public class PlaceServiceImpl extends ServiceImpl<PlaceMapper, Place> implements
     }
 
     @Override
-    public void PlaceDelete(Integer placeId, String placeState) {
+    public void PlaceDelete(Place place) {
 
-        Place place = new Place();
-        //赋值
-        place.setPlaceId(placeId);
-        place.setPlaceState(placeState);
+
         int rows = placeMapper.updateById(place);
         System.out.println("成功修改场地状态的行数为"+rows);
 

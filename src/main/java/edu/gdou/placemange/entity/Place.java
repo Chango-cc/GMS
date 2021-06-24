@@ -24,7 +24,7 @@ public class Place  {
     @TableField(value = "place_type")
     private String placeType;//场地类型
     @TableField(value = "place_manageid")
-    private Integer placeManageid;//场地负责人编号
+    private String placeManageid;//场地负责人编号
     @TableField(value = "place_manage")
     private String placeManage;//场地负责人
     @TableField(value = "place_state")
@@ -62,11 +62,11 @@ public class Place  {
         this.placeType = placeType;
     }
 
-    public Integer getPlaceManageid() {
+    public String getPlaceManageid() {
         return placeManageid;
     }
 
-    public void setPlaceManageid(Integer placeManageid) {
+    public void setPlaceManageid(String placeManageid) {
         this.placeManageid = placeManageid;
     }
 
@@ -93,7 +93,7 @@ public class Place  {
                 ", placeNo='" + placeNo + '\'' +
                 ", placeStorey='" + placeStorey + '\'' +
                 ", placeType='" + placeType + '\'' +
-                ", placeManageid=" + placeManageid +
+                ", placeManageid='" + placeManageid + '\'' +
                 ", placeManage='" + placeManage + '\'' +
                 ", placeState='" + placeState + '\'' +
                 '}';

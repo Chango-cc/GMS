@@ -51,6 +51,17 @@ const app=new Vue({
         Time:[],
         choose:[],
         keepList:[],
+        applytype:"教务",
+
+        // 所有页面的数据
+        totalPage: [],
+        pageSize: 8,
+        // 共几页
+        pageNum: 1,
+        // 当前显示的数据
+        dataShow: "",
+        // 默认当前显示第一页
+        currentPage: 0,
 
     },
     methods: {
@@ -106,13 +117,15 @@ const app=new Vue({
             msg.timeCollection=this.Time;
             msg.storey=checkedFirst;
             msg.type=checkedSecond;
-            console.log("hhdafka:"+msg.timeCollection[0].timelist[0]);
+            // console.log("hhdafka:"+msg.timeCollection[0].timelist[0]);
             $.ajax({
                 url: "../place/placeKeepSelect",
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify(msg),
+                async:false,
                 type: "post",
                 success: function (result) {
+                    console.log("sdfgsdfsd    "+result)
                      object.list=result;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -125,32 +138,73 @@ const app=new Vue({
                     v.active=false;
                 })
             }
+            for(var k=0;k<this.choose.length;k++){
+                document.getElementById("msgtable").getElementsByTagName("input")[this.choose[k]].checked=false;
+            }
+            this.choose=[]
             this.Time = []
+
+            this.currentPage = 0
+            this.showData()
+            this.getA()
+        },
+        turnPage(index){
+            this.dataShow = this.totalPage[index]
+            this.currentPage = index-1
+
+        },
+        // 下一页
+        nextPage() {
+            if (this.currentPage === this.pageNum - 1) return ;
+            this.dataShow = this.totalPage[++this.currentPage];
+        },
+        // 上一页
+        prePage() {
+            if (this.currentPage === 0) return ;
+            this.dataShow = this.totalPage[--this.currentPage];
         },
         chooseToKeep(aim){
-            this.state=aim;
-            console.log("----------------");
-            console.log("开始了，目前的长度为"+this.choose.length);
-            console.log("选中的位置是"+aim);
+            var c = aim+(this.currentPage)*8;
             var bool = -1;
             if(this.choose.length === 0){
-                this.choose.push(aim)
+                this.choose.push(c)
             }else {
                 for(var i=0;i<this.choose.length;i++){
-                    console.log("选中的位置是"+this.choose[i]);
-                    if(aim ===  this.choose[i] ){
+                    if(c ===  this.choose[i] ){
                         bool = i
                     }
                 }
                 if(bool === -1){
-                    this.choose.push(aim)
+                    this.choose.push(c)
                 }else {
                     this.choose.splice(bool,1)
                 }
             }
-            console.log("结束了，目前的长度为"+this.choose.length);
-            console.log("----------------");
         },
+        // chooseToKeep(aim){
+        //     this.state=aim;
+        //     console.log("----------------");
+        //     console.log("开始了，目前的长度为"+this.choose.length);
+        //     console.log("选中的位置是"+aim);
+        //     var bool = -1;
+        //     if(this.choose.length === 0){
+        //         this.choose.push(aim)
+        //     }else {
+        //         for(var i=0;i<this.choose.length;i++){
+        //             console.log("选中的位置是"+this.choose[i]);
+        //             if(aim ===  this.choose[i] ){
+        //                 bool = i
+        //             }
+        //         }
+        //         if(bool === -1){
+        //             this.choose.push(aim)
+        //         }else {
+        //             this.choose.splice(bool,1)
+        //         }
+        //     }
+        //     console.log("结束了，目前的长度为"+this.choose.length);
+        //     console.log("----------------");
+        // },
         toKeep(){
             console.log("准备了，目前的长度为"+this.choose.length);
             for( var i = 0;i<this.choose.length;i++){
@@ -158,10 +212,13 @@ const app=new Vue({
                 this.keepList.push(this.list[this.choose[i]])
                 console.log("选中的位置是"+this.list[this.choose[i]].placeNo);
             }
+            var keep= {};
+            keep.keepList=this.keepList;
+            keep.date=this.applytype;
             $.ajax({
                 url: "../place/placeKeeping",
                 contentType: "application/json;charset=UTF-8",
-                data: JSON.stringify(this.keepList),
+                data: JSON.stringify(keep),
                 type: "post",
                 success: function (result) {
                     console.log("niu++++++++++"+result);
@@ -179,6 +236,34 @@ const app=new Vue({
 
             }
             this.choose=[]
+            this.keepList=[]
+        },
+        //每页显示数据
+        showData(){
+            console.log("长度:"+this.list.length)
+
+            this.pageNum = Math.ceil(this.list.length / this.pageSize) || 1;
+            for (let i = 0; i < this.pageNum; i++) {
+                var page = []
+                var checks = []
+                page = this.list.slice(this.pageSize * i, this.pageSize * (i + 1))
+                for(let i=0;i<page.length;i++){
+                    checks.push({
+                        active:false
+                    })
+                }
+                var a = {}
+                a.page = page
+                a.checks = checks
+                this.totalPage[i] = a
+            }
+            console.log("总页数："+this.pageNum+"  ")
+        },
+        //dd
+        getA(){
+            // 获取到数据后显示第一页内容
+            this.dataShow = this.totalPage[this.currentPage];
+            console.log("当前："+this.dataShow +"  ")
         },
         // sentCheckedHelp(object){
         //     var checkedFirst;
@@ -297,36 +382,36 @@ const app=new Vue({
         //     })
         // },
 
-        setPages(pages){
-            this.pages = pages;
-        },
-        setActive(newIndex) {
-            document.getElementById("ul_pages").childNodes[this.page + 1].classList.remove("active");
-            document.getElementById("ul_pages").childNodes[newIndex + 1].classList.add("active");
-            this.page = newIndex;
-        },
-        nextPage: function () {
-            if (this.page < this.pages) {
-                this.start += 5;
-                // this.end += 5;
-                this.setActive(this.page + 1);
-                this.getData(this,this.start,this.length);
-            }
-        },
-        previousPage: function () {
-            if (this.page > 1) {
-                this.start -= 5;
-                // this.end -= 5;
-                this.setActive(this.page - 1);
-                this.getData(this,this.start,this.length);
-            }
-        },
-        goto: function (index) {
-            this.start = 5 * (index - 1);
-            // this.end = 5 * (index);
-            this.setActive(index);
-            this.getData(this,this.start,this.length);
-        },
+        // setPages(pages){
+        //     this.pages = pages;
+        // },
+        // setActive(newIndex) {
+        //     document.getElementById("ul_pages").childNodes[this.page + 1].classList.remove("active");
+        //     document.getElementById("ul_pages").childNodes[newIndex + 1].classList.add("active");
+        //     this.page = newIndex;
+        // },
+        // nextPage: function () {
+        //     if (this.page < this.pages) {
+        //         this.start += 5;
+        //         // this.end += 5;
+        //         this.setActive(this.page + 1);
+        //         this.getData(this,this.start,this.length);
+        //     }
+        // },
+        // previousPage: function () {
+        //     if (this.page > 1) {
+        //         this.start -= 5;
+        //         // this.end -= 5;
+        //         this.setActive(this.page - 1);
+        //         this.getData(this,this.start,this.length);
+        //     }
+        // },
+        // goto: function (index) {
+        //     this.start = 5 * (index - 1);
+        //     // this.end = 5 * (index);
+        //     this.setActive(index);
+        //     this.getData(this,this.start,this.length);
+        // },
         getDate(){
             var date = new Date();
             var list = this.getDateRange(date,8,false)
@@ -369,6 +454,8 @@ const app=new Vue({
                 active:false
             })
         }
+        // this.showData()
+        // this.getA()
     },
     mounted() {
          this.sentChecked();

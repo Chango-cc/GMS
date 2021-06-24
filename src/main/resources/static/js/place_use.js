@@ -5,6 +5,7 @@ const app=new Vue({
         pages: 1,
         page: 1,
         length: 5,
+        listed: "",
         list: [],
         storey:"请选择场地楼层",//场地楼层
         type:"请选择场地类型",//场地类型
@@ -22,6 +23,9 @@ const app=new Vue({
         hh:"",
         mf:"",
         ss:"",
+        current:1,
+        size:4,
+        totalpage:""
     },
     filters: {
         formatDate: function (value) {
@@ -35,22 +39,52 @@ const app=new Vue({
         }
     },
     methods: {
-        // getData(object,offset,length){
-        //     $.ajax({
-        //         url: "../place/queryPlaceKeep",
-        //         contentType: "application/json;charset=UTF-8",
-        //         data: {"offset":offset,"length":length},
-        //         type: "post",
-        //         success: function (result) {
-        //             // object.list=result;
-        //         },
-        //         error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //             console.log("error message：" + XMLHttpRequest.responseText);
-        //         }
-        //     })
-        // },
+        turnpagepre(){
+            if (this.current !== 1){
+                this.current=this.listed.current-1
+                this.sentChecked(this.title)
+            }
+        },
+        turnpagenext(){
+            if (this.current !== this.totalpage){
+                this.current=this.listed.current+1
+                this.sentChecked(this.title)
+            }
+        },
+        turnpage(local){
+            // if(local > 0 && local < this.totalpage+1){
+            //
+            // }
+            this.current=local
+            this.sentChecked(this.title)
+        },
+        settimed(week){
+            var object = this
+            $.ajax({
+                url: "../place/placeToSelectWeek",
+                contentType: "application/json;charset=UTF-8",
+                data: {"week":week,"current":this.current,"size":this.size},
+                type: "get",
+                success: function (result) {
+                    // object.list=result;
+                    // console.log("-----------   "+result)
+                    object.listed=result;
+                    object.totalpage=object.listed.pages;
+                    object.list=result.records;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error message：" + XMLHttpRequest.responseText);
+                }
+            })
+        },
         sentChecked(check){
             this.act="";
+            if(this.title !== check){
+                this.current=1
+            }
+            if(check==="场地一周信息"){
+                check=""
+            }
             this.title=check;
             console.log("要输入的查询状态----------------------------"+check);
             var object=this;
@@ -68,10 +102,27 @@ const app=new Vue({
             $.ajax({
                 url: "../place/placeToSelect",
                 contentType: "application/json;charset=UTF-8",
-                data: {"storey":checkedFirst,"type":checkedSecond,"check":check},
+                data: {"current":this.current,"size":this.size,"storey":checkedFirst,"type":checkedSecond,"check":check},
                 type: "get",
                 success: function (result) {
-                    object.list=result;
+                    // object.list=result;
+                    console.log("-----------   "+result)
+                    object.listed=result;
+                    object.totalpage=object.listed.pages;
+                    object.list=result.records;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error message：" + XMLHttpRequest.responseText);
+                }
+            })
+
+        },
+        tochangkeep(){
+            $.ajax({
+                url: "../place/toChangeKeeped",
+                contentType: "application/json;charset=UTF-8",
+                type: "get",
+                success: function (result) {
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
@@ -84,7 +135,6 @@ const app=new Vue({
                 contentType: "application/json;charset=UTF-8",
                 type: "get",
                 success: function (result) {
-                    object.list=result;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
@@ -104,10 +154,29 @@ const app=new Vue({
             this.applyState(applyId,"已通过")
 
         },
-        applyDelete(applyId){
-
-            this.applyState(applyId,"已退订")
-
+        applyDelete(applyId,local){
+            // SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            // Date date = dateformat.parse("2016-6-19");
+            // var num = (new Date().getTime()-date1.getTime())/(24*60*60*1000);
+            // console.log("---------"+this.list[local].applyDate+"---------"+new Date()+"------"+(this.list[local].applyDate - new Date()))
+            var time = this.list[local].applyDate;
+            var timestamp2 = Date.parse(new Date(this.formatDate(time)));
+            var num = (new Date().getTime()-timestamp2)/(24*60*60*1000);
+            if(num<0){
+                console.log("-----------+----------"+timestamp2+"++++++++++++++++"+num+"-----")
+                 this.applyState(applyId,"已退订")
+            }else {
+                alert("请提前一天退订")
+            }
+        },
+        formatDate: function (value) {
+            let date = new Date(value);
+            let y = date.getFullYear();
+            let MM = date.getMonth() + 1;
+            MM = MM < 10 ? ('0' + MM) : MM;
+            let d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            return y + '-' + MM + '-' + d ;
         },
         applyFail(applyId){
 
@@ -129,11 +198,12 @@ const app=new Vue({
                 success: function (result) {
                     console.log("点击×后的结果---------------"+result+"用于匹配的申请编号 -------------"+applyId);
                     if(result){
-                        for(var i=0;i<object.list.length;i++){
-                            if (object.list[i].applyId === applyId){
-                                object.list.splice(i,1)
-                            }
-                        }
+                        // for(var i=0;i<object.list.length;i++){
+                        //     if (object.list[i].applyId === applyId){
+                        //         object.list.splice(i,1)
+                        //     }
+                        // }
+                        object.sentChecked(object.title);
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -342,6 +412,6 @@ const app=new Vue({
     },
     mounted() {
         this.sentChecked("待审核");
-        this.changestate();
+        this.changestate();//更新是否为已失约
     },
 })

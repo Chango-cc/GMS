@@ -5,6 +5,7 @@ const app=new Vue({
         pages: 1,
         page: 1,
         length: 5,
+        listed: "",
         list: [],
         storey:"请选择场地楼层",//场地楼层
         type:"请选择场地类型",//场地类型
@@ -17,22 +18,45 @@ const app=new Vue({
             placeType:"",
             placeState:"",
             placeId:""
-        }
+        },
+        current:1,
+        size:4,
+        totalpage:""
+
     },
     methods: {
-        getData(object,offset,length){
-            $.ajax({
-                url: "../place/queryPlace",
-                contentType: "application/json;charset=UTF-8",
-                data: {"offset":offset,"length":length},
-                type: "post",
-                success: function (result) {
-                    object.list=result;
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("error message：" + XMLHttpRequest.responseText);
-                }
-            })
+        // getData(object,current,size){
+        //     $.ajax({
+        //         url: "../place/queryPlace",
+        //         contentType: "application/json;charset=UTF-8",
+        //         data: {"current":current,"size":size},
+        //         type: "get",
+        //         success: function (result) {
+        //             object.listed=result;
+        //             object.totalpage=object.listed.pages;
+        //             object.list=result.records;
+        //
+        //         },
+        //         error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //             console.log("error message：" + XMLHttpRequest.responseText);
+        //         }
+        //     })
+        // },
+        turnpagepre(){
+            if (this.current !== 1){
+                this.current=this.listed.current-1
+                this.sentChecked(this.title)
+            }
+        },
+        turnpagenext(){
+            if (this.current !== this.totalpage){
+                this.current=this.listed.current+1
+                this.sentChecked(this.title)
+            }
+        },
+        turnpage(local){
+            this.current=local
+            this.sentChecked()
         },
         sentChecked(){
             var object=this;
@@ -50,10 +74,13 @@ const app=new Vue({
             $.ajax({
                 url: "../place/queryPlaceByChecked",
                 contentType: "application/json;charset=UTF-8",
-                data: {"storey":checkedFirst,"type":checkedSecond},
+                data: {"current":this.current,"size":this.size,"storey":checkedFirst,"type":checkedSecond},
                 type: "get",
                 success: function (result) {
-                    object.list=result;
+                    // object.list=result;
+                    object.listed=result;
+                    object.totalpage=object.listed.pages;
+                    object.list=result.records;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
@@ -203,6 +230,7 @@ const app=new Vue({
         }
     },
     mounted() {
-        this.getData(this,this.start,this.length);
+        // this.getData(this,this.current,this.size);
+        this.sentChecked();
     },
 })

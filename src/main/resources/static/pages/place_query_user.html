@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <!--    <link rel="stylesheet" href="../css/main.css">-->
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/place_query.css">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" id="table_place">
+    <div class="card card-margin-top">
+        <div class="card-header">
+            <i class="fa fa-filter" aria-hidden="true">&nbsp;筛选内容</i>
+            <span>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-search " aria-hidden="true" style="cursor: pointer" @click="sentChecked()">&nbsp;查询</i>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-file-text-o " aria-hidden="true" style="cursor: pointer">&nbsp;导出</i>
+                         <i class="fa fa-chevron-down  align-items-center" aria-hidden="true" data-toggle="collapse" href="#collapse" style="cursor: pointer"></i>
+                     </span>
+
+        </div>
+        <div id="collapse" class="collapse show" >
+            <div class="card-body row">
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selectstorey"  class="label-margin">场地楼层</label>
+                    <select id="selectstorey" class="selection-width" v-model="storey">
+                        <option >请选择场地楼层</option>
+                        <option >一楼</option>
+                        <option >二楼</option>
+                        <option >三楼</option>
+                    </select>
+                </div>
+                <div class="col-md-6 text-center content-padding" >
+                    <label for="selecttype" class="label-margin"  >场地类型</label>
+                    <select id="selecttype" class="selection-width" v-model="type">
+                        <option >请选择场地类型</option>
+                        <option >篮球场</option>
+                        <option >羽毛球场</option>
+                        <option >排球场</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-margin-top card-margin-buttom"  >
+        <div class="card-header">
+            <div>
+                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>场地信息列表</span>
+            </div>
+            <div >
+                <i id="refresh" class="fa fa-refresh .pointer" aria-hidden="true" ></i>
+                <label for="refresh"  class="label-margin" @click="sentChecked()">刷新</label>
+            </div>
+        </div>
+        <div style="padding: 20px">
+            <table class="table ">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">场地编号</th>
+                    <th scope="col">场地类型</th>
+                    <th scope="col">场地楼层</th>
+                    <th scope="col">场地状态</th>
+                    <th scope="col">场地负责人</th>
+<!--                    <th scope="col">操作</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in list" :key="index" :content="item">
+                    <th>
+                        {{index+1}}
+                    </th>
+                    <td>{{item.placeNo}}</td>
+                    <td>{{item.placeType}}</td>
+                    <td>{{item.placeStorey}}</td>
+                    <td>{{item.placeState}}</td>
+                    <td>{{item.placeManage}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-muted">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item " >
+                        <a class="page-link"  tabindex="-1"  @click="turnpagepre()">Previous</a>
+                    </li>
+                    <li class="page-item" v-for="index in totalpage" :key="index" :content="item" :class="(current == (index )) ? 'active' : '' ">
+                        <a class="page-link"  @click="turnpage(index)">{{index}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"  @click="turnpagenext()">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/place_query.js"></script>
+</body>
+</html>

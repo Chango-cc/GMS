@@ -1,6 +1,8 @@
 package edu.gdou.placemange.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.gdou.placemange.entity.Place;
 import edu.gdou.placemange.entity.PlaceApply;
@@ -26,7 +28,7 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
     插入场地申请信息
      */
     @Override
-    public void PlaceApplyInsert(List<PlaceAvailable> keepList) throws ParseException {
+    public void PlaceApplyInsert(List<PlaceAvailable> keepList , String userId ) throws ParseException {
 
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         for (int i = 0 ; i<keepList.size();i++){
@@ -37,6 +39,7 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
             placeApply.setPlaceStorey(keepList.get(i).getPlaceStorey());
             placeApply.setPlaceType(keepList.get(i).getPlaceType());
             placeApply.setApplyDate(date);
+            placeApply.setUserId(userId);
             placeApply.setApplyPeriod(keepList.get(i).getApplyPeriod());
             placeApply.setApplyType("非赛事");
             placeApply.setApplyState("待审核");
@@ -46,6 +49,47 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
 
     }
 
+    /*
+    插入的赛事场地
+     */
+    @Override
+    public void PlaceApplyInserted(List<PlaceAvailable> keepList,String applyType , String userId ) throws ParseException {
+
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0 ; i<keepList.size();i++){
+            System.out.println("对应的场地编号是：   "+keepList.get(i).getPlaceNo());
+            Date date = dateformat.parse(keepList.get(i).getApplyDate());
+            PlaceApply placeApply = new PlaceApply();
+            placeApply.setPlaceNo(keepList.get(i).getPlaceNo());
+            placeApply.setPlaceStorey(keepList.get(i).getPlaceStorey());
+            placeApply.setPlaceType(keepList.get(i).getPlaceType());
+            placeApply.setApplyDate(date);
+            placeApply.setUserId(userId);
+            placeApply.setApplyPeriod(keepList.get(i).getApplyPeriod());
+            placeApply.setApplyType(applyType);
+            if(applyType.equals("非赛事")){
+                placeApply.setApplyState("待审核");
+            }else {
+                placeApply.setApplyState("已通过");
+            }
+            int rows = placeApplyMapper.insert(placeApply);
+            System.out.println("插入产生的影响行数"+rows);
+        }
+
+    }
+
+    /*
+    返回对应的赛事预约信息
+     */
+    public  List<PlaceApply> PlaceApplySelectMatch(String matchId){
+
+        QueryWrapper<PlaceApply> queryWrapper = new QueryWrapper<>();
+        //组装条件
+        //获得对应场地编号
+        queryWrapper.eq("apply_type",matchId);
+        List<PlaceApply> list = placeApplyMapper.selectList(queryWrapper);
+        return list;
+    }
     /*
     修改场地申请状态
      */
@@ -80,7 +124,7 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
     }
 
     @Override
-    public List<PlaceApply> PlaceApplySelect(String storey,String type,String check,String userId) {
+    public IPage<PlaceApply> PlaceApplySelect(Integer current , Integer size,String storey,String type,String check,String userId) {
 
         Date now = new Date();
         LocalDate localDate=now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -108,31 +152,56 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
             queryWrapper.allEq(map,false).gt("apply_date",nowDate);
         }else
         queryWrapper.allEq(map,false);
-//        QueryWrapper<PlaceApply> queryWrapper = new QueryWrapper<>();
-//        //组装条件
-//        queryWrapper.eq("place_storey",storey);
-//        queryWrapper.eq("place_type",type);
-//        queryWrapper.eq("apply_state","待审核");
-//        queryWrapper.eq("user_id",userId);
-//        //查询得到场地预约状态和场地编号符合的场地预约信息
-        List<PlaceApply> list = placeApplyMapper.selectList(queryWrapper);
+
+
+        IPage<PlaceApply> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+        IPage<PlaceApply> result=placeApplyMapper.selectPage(page,queryWrapper);
+        List<PlaceApply> places = result.getRecords();
+        System.out.println("palaces.size=---  " + places.size());
+        long pages = result.getPages();
+        System.out.println("页数：  " + pages);
+        System.out.println("总记录数--  "+result.getTotal());
+        System.out.println("当前页码：    " + result.getCurrent());
+        System.out.println("每页的纪录数： " + result.getSize());
+//        List<PlaceApply> list = placeApplyMapper.selectList(queryWrapper);
         //进行时间段匹配
 
-        return list;
+        return result;
     }
 
     /*
     查询场地一周信息
      */
     @Override
-    public List<PlaceApply> PlaceApplyDate(Date dateStart, Date dateEnd) {
+    public IPage<PlaceApply> PlaceApplyDate(Date dateStart, Date dateEnd , Integer current , Integer size, String userId) {
 
         QueryWrapper<PlaceApply> queryWrapper = new QueryWrapper<>();
         //组装条件
+        Map<String,Object> map = new HashMap<>();
+        //组装条件
+        map.put("user_id",userId);
+        queryWrapper.allEq(map,false);
+
         queryWrapper.between("apply_date",dateStart,dateEnd);
-        List<PlaceApply> list = placeApplyMapper.selectList(queryWrapper);
-        list.forEach(placeApply ->System.out.println(placeApply));
-        return list;
+
+        IPage<PlaceApply> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+        IPage<PlaceApply> result=placeApplyMapper.selectPage(page,queryWrapper);
+        List<PlaceApply> places = result.getRecords();
+        System.out.println("palaces.size=---  " + places.size());
+        long pages = result.getPages();
+        System.out.println("页数：  " + pages);
+        System.out.println("总记录数--  "+result.getTotal());
+        System.out.println("当前页码：    " + result.getCurrent());
+        System.out.println("每页的纪录数： " + result.getSize());
+//        List<PlaceApply> list = placeApplyMapper.selectList(queryWrapper);
+        //进行时间段匹配
+//        List<PlaceApply> list = placeApplyMapper.selectList(queryWrapper);
+        places.forEach(placeApply ->System.out.println(placeApply));
+        return result;
     }
 
     /*
