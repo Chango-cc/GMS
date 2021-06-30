@@ -181,6 +181,40 @@ const app=new Vue({
                 }
             }
         },
+        tochange() {
+            var object = this;
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if(url.indexOf("?")!=-1){
+                result = url.substr(url.indexOf("=")+1);
+            }
+            var changContent = {}
+            changContent.placeAvailable = this.changitem
+            changContent.date = result
+            console.log("     ++  "+result.toString())
+            $.ajax({
+                url: "../place/placeApplyToUpdata",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(changContent),
+                async:false,
+                type: "post",
+                success: function (result) {
+                    if(result==="success"){
+                        alert("修改成功")
+                        document.getElementById("return").click();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error message：" + XMLHttpRequest.responseText);
+                }
+            })
+
+        },
+        tochoosechange(local){
+
+            var option=local+(this.currentPage)*8
+            this.changitem=this.list[option]
+        },
         // chooseToKeep(aim){
         //     this.state=aim;
         //     console.log("----------------");
@@ -237,6 +271,8 @@ const app=new Vue({
             }
             this.choose=[]
             this.keepList=[]
+            this.showData()
+            this.getA()
         },
         //每页显示数据
         showData(){

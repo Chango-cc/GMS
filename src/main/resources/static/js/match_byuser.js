@@ -37,12 +37,13 @@ new Vue({
         },
         getNum(object){
             $.ajax({
-                url: "../match/queryMatchNum",
+                url: "../match/queryMatchNumByUser",
                 contentType: "application/json;charset=UTF-8",
-                type: "post",
+                type: "get",
                 success: function (result) {
-                    object.setPages(Math.ceil(result / 5));
-                    document.getElementById("1").classList.add("active");
+                    object.setPages(Math.ceil(result / object.length));
+                    if (object.pages > 0)
+                        document.getElementById("page1").classList.add("active");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);

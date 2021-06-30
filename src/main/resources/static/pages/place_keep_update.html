@@ -132,11 +132,11 @@
                 <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>场地信息列表</span>
             </div>
             <div style="cursor: pointer">
-                <i id="square" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop" @click="toKeep()"></i>
-                <label for="square"  class="label-margin" >预约场地</label>
+                <i id="square" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop" @click="tochange()"></i>
+                <label for="square"  class="label-margin" >修改场地</label>
                 &nbsp;&nbsp;
-                <i id="refresh" class="fa fa-refresh " aria-hidden="true" ></i>
-                <label for="refresh"  style="margin:0px;">刷新</label>
+                <a href="../place/toPlaceUseUser" id="return"><i id="refresh" class="fa fa-refresh " aria-hidden="true" ></i></a>
+                <label for="refresh"  style="margin:0px;">返回</label>
             </div>
         </div>
         <div style="padding: 20px">
@@ -156,7 +156,7 @@
                 <tr v-for="(item,index) in dataShow.page" :key="index" :content="item">
                     <th>
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" :id="index" name="time" @click="tochange(index)">
+                            <input type="radio" class="custom-control-input" :id="index" name="time" @click="tochoosechange(index)">
                             <label class="custom-control-label" :for="index"></label>
                         </div>
                     </th>

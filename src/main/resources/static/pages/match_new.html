@@ -8,6 +8,7 @@
     <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/bootstrap-validate.js"></script>
+<!--    <link rel="stylesheet" href="../css/place_keep.css">-->
     <link rel="stylesheet" href="../css/match_new.css">
     <title>Title</title>
 </head>
@@ -36,9 +37,9 @@
                     <span class="label_key">赛事类型:</span>
                 </div>
                 <div width="100%">
-                <select class="custom-select" v-on:change="indexSelect($event)" v-model="type">
+                <select class="custom-select" v-on:change="indexSelect($event)" v-model="mtype">
                     <option selected>请选择类型</option>
-                    <option v-for="(item,index) in list" :key="index" :content="item"  v-bind:value="item.type">{{item.type}}</option>
+                    <option v-for="(item,index) in mlist" :key="index" :content="item"  v-bind:value="item.type">{{item.type}}</option>
                 </select>
                 </div>
             </div>
@@ -59,12 +60,186 @@
                                 </span>
                             </h6>
                         </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
+                                <div class="container" id="table_placeKeep">
+                                    <div class="card card-margin">
+                                        <div class="card-header_two">
+                                            <i class="fa fa-filter" aria-hidden="true">&nbsp;筛选内容</i>
+                                            <span>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-search " aria-hidden="true" style="cursor: pointer" @click="sentChecked()">&nbsp;查询</i>
+                         <span class="">&nbsp;&nbsp;</span><i class="fa fa-file-text-o " aria-hidden="true" style="cursor: pointer">&nbsp;导出</i>
+                         <i class="fa fa-chevron-down  align-items-center" aria-hidden="true" data-toggle="collapse" href="#collapse" style="cursor: pointer"></i>
+                     </span>
+
+                                        </div>
+                                        <div id="collapse" class="collapse show" >
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li v-for="(item,index) in dateList" :key="index" :content="item" >
+                                                    <a :href="'#a'+index" role="tab" data-toggle="tab" >{{item.date}}</a>
+                                                </li>
+                                            </ul>
+                                            <!--标签的内容-->
+                                            <div class="tab-content" >
+                                                <div class="tab-pane" id="a0" >
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList0" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time0'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time0'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="a1">
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList1" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time1'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time1'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="a2">
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList2" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time2'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time2'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="a3">
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList3" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time3'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time3'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="a4">
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList4" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time4'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time4'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="a5">
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList5" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time5'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time5'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="a6">
+                                                    <div class="container " >
+                                                        <div class="row">
+                                                            <div class="custom-control custom-checkbox col-md-3" v-for="(item,index) in timeList6" :key="index" :content="item">
+                                                                <input type="checkbox" class="custom-control-input" :id="'time6'+index" name="example1" v-model="item.active">
+                                                                <label class="custom-control-label" :for="'time6'+index">{{item.time}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body row">
+                                                <div class="col-md-6 text-center content-padding" >
+                                                    <label for="selectstorey"  class="label-margin">场地楼层</label>
+                                                    <select id="selectstorey" class="selection-width" v-model="storey">
+                                                        <option selected>请选择场地楼层</option>
+                                                        <option >一楼</option>
+                                                        <option >二楼</option>
+                                                        <option >三楼</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 text-center content-padding" >
+                                                    <label for="selecttype" class="label-margin"  >场地类型</label>
+                                                    <select id="selecttype" class="selection-width" v-model="type" >
+                                                        <option selected>请选择场地类型</option>
+                                                        <option >篮球场</option>
+                                                        <option >羽毛球场</option>
+                                                        <option >排球场</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-margin"  >
+                                        <div id="card-header" class="card-header_two">
+                                            <div>
+                                                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>场地信息列表</span>
+                                            </div>
+                                            <div style="cursor: pointer">
+                                                <i id="square" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop" @click="toKeep()"></i>
+                                                <label for="square"  class="label-margin" >预约场地</label>
+                                                &nbsp;&nbsp;
+                                                <i id="refresh" class="fa fa-refresh " aria-hidden="true" ></i>
+                                                <label for="refresh"  style="margin:0px;">刷新</label>
+                                            </div>
+                                        </div>
+                                        <div style="padding: 20px">
+                                            <table class="table " id="msgtable">
+                                                <thead class="table-dark">
+                                                <tr>
+                                                    <th scope="col">状态</th>
+                                                    <th scope="col">场地编号</th>
+                                                    <th scope="col">场地类型</th>
+                                                    <th scope="col">场地楼层</th>
+                                                    <th scope="col">可用日期</th>
+                                                    <th scope="col">可用时间段</th>
+                                                    <th scope="col">场地负责人</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr v-for="(item,index) in list" :key="index" :content="item">
+                                                    <th>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" :id="index" class="custom-control-input " @click="chooseToKeep(index)"  >
+                                                            <label :for="index" class="custom-control-label"></label>
+                                                        </div>
+                                                    </th>
+                                                    <td>{{item.placeNo}}</td>
+                                                    <td>{{item.placeType}}</td>
+                                                    <td>{{item.placeStorey}}</td>
+                                                    <td>{{item.applyDate}}</td>
+                                                    <td>{{item.applyPeriod}}</td>
+                                                    <td>{{item.placeManage}}</td>
+                                                </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-end">
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                                    </li>
+                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="#">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
                                 <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                                        <div><button type="button" class="btn btn-primary btn-sm" @click="getDataByCondition()">Apply</button></div>
+                                        <div><button type="button" class="btn btn-primary btn-sm" @click="toKeep()">Apply</button></div>
                                     </div>
                                     <div class="input-group">
                                         <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Cancel</button>
@@ -85,12 +260,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>item.matchType}}</td>
-                        <td>item.matchTime}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td><span class="text_operate">delete</span></td>
+                    <tr v-for="(item,index) of keepList" :key="index" :content="item" >
+                        <td>{{item.placeNo}}</td>
+                        <td>{{item.placeStorey}}</td>
+                        <td>{{item.applyDate}}</td>
+                        <td>{{item.applyPeriod}}</td>
+                        <td><span class="text_operate" @click="removeKeepList(index)">delete</span></td>
                     </tr>
                     </tbody>
                 </table>
@@ -109,9 +284,10 @@
                                 </span>
                             </h6>
                         </div>
-                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                              data-parent="#accordionExample2">
                             <div class="card-body">
+                                <cpn2></cpn2>
                                 <hr>
                                 <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -127,20 +303,20 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th class="text-center" scope="col" width="15%">场地编号</th>
-                        <th class="text-center" scope="col" width="15%">场地楼层</th>
-                        <th class="text-center" scope="col" width="30%">日期</th>
-                        <th class="text-center" scope="col" width="30%">时间</th>
+                        <th class="text-center" scope="col" width="15%">器材编号</th>
+                        <th class="text-center" scope="col" width="15%">器材楼层</th>
+                        <th class="text-center" scope="col" width="30%">开始时间</th>
+                        <th class="text-center" scope="col" width="30%">结束时间</th>
                         <th class="text-center" scope="col" width="20%">操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>item.matchType}}</td>
-                        <td>item.matchTime}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td><span class="text_operate">delete</span></td>
+                    <tr v-for="(item,index) in ereservationList" :key="index" :content="item">
+                        <td>{{item.eno}}</td>
+                        <td>{{item.etype}}</td>
+                        <td>{{item.estartrent}}</td>
+                        <td>{{item.eendrent}}</td>
+                        <td><span class="text_operate" @click="">delete</span></td>
                     </tr>
                     </tbody>
                 </table>
@@ -153,5 +329,6 @@
     </div>
 </div>
 <script type="text/javascript" src="../js/match_new.js"></script>
+<!--<script type="text/javascript" src="../js/place_keep.js"></script>-->
 </body>
 </html>

@@ -16,7 +16,7 @@
     <!--        <result property="refereeId " column="referee_id"/>-->
     <!--        <result property="status " column="status"/>-->
     <!--    </resultMap>-->
-    <select id="queryMatchNum" resultType="int">
+    <select id="queryMatchNum" resultType="int" >
         SELECT COUNT(*)
         FROM gms.match;
     </select>
@@ -27,6 +27,10 @@
     <select id="queryMatchById" resultType="edu.gdou.matchmanage.bean.Match">
         SELECT *
         FROM gms.match where match_id=#{id}
+    </select>
+    <select id="queryMatchNumByUser" resultType="int" >
+        SELECT COUNT(*)
+        FROM gms.match where user_id=#{id};
     </select>
     <select id="queryMatchByUser" resultType="edu.gdou.matchmanage.bean.Match">
         SELECT *
@@ -78,17 +82,17 @@
         </foreach>
         limit #{offset},#{length};
     </select>
-    <insert id="addMatch" parameterType="edu.gdou.matchmanage.bean.Match">
-        insert into gms.match (match_name, match_time, match_place, match_tools, match_type, match_describe, user_id,
+    <insert id="addMatch" parameterType="edu.gdou.matchmanage.bean.Match" useGeneratedKeys="true" keyProperty="matchId">
+        insert into gms.match (match_name, match_username, match_refereename, match_reviewername, match_type, match_describe, user_id,
                                reviewer_id, referee_id, status)
-            value (#{matchName},#{matchTime},#{matchPlace},#{matchTools},#{matchType},#{matchDescribe},#{userId},#{reviewerId},#{refereeId},#{status})
+            value (#{matchName},#{matchUsername},#{matchRefereename},#{matchReviewername},#{matchType},#{matchDescribe},#{userId},#{reviewerId},#{refereeId},#{status})
     </insert>
     <update id="updateMatch" parameterType="edu.gdou.matchmanage.bean.Match">
         update gms.match
         set match_name=#{matchName},
-            match_time=#{matchTime},
-            match_place=#{matchPlace},
-            match_tools=#{matchTools},
+            match_username=#{matchUsername},
+            match_refereename=#{matchRefereename},
+            match_reviewername=#{matchReviewername},
             match_type=#{matchType},
             match_describe=#{matchDescribe},
             user_id=#{userId},
@@ -98,12 +102,12 @@
         where match_id=#{matchId};
     </update>
     <update id="updateMatchStatus">
-        update gms.match set status=#{status} where match_id=#{id};
+        update gms.match set referee_id=#{refereeId}, match_refereename=#{refereeName}, status=#{status} where match_id=#{id};
     </update>
-    <delete id="deleteMatch" parameterType="edu.gdou.matchmanage.bean.Match">
+    <delete id="deleteMatch">
         delete
         from gms.match
-        where match_id = #{matchId};
+        where match_id = #{id};
     </delete>
 
     <insert id="addReferee" parameterType="edu.gdou.matchmanage.bean.Referee">

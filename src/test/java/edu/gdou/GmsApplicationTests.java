@@ -21,14 +21,15 @@ class GmsApplicationTests {
 	@Test
 	void test(){
 //		System.out.println("time:"+(System.currentTimeMillis()/1000)+" DAO:"+matchDao);
-		Timestamp a=new Timestamp(System.currentTimeMillis());
-		Match match=new Match("5","naame5",  a,"placeasdf44","toolfsasfs4","typsae4","descrasfibe4","null","null",1,"1");
-		System.out.println(match);
-//		boolean r=matchDao.addMatch(match);
+//		Timestamp a=new Timestamp(System.currentTimeMillis());
+//		Match match=new Match("5","naamae5",  "a","placeasdadf44","tooadslfsasfs4","typasae4","descrasasdfibe4","ads","asdd",1,"1");
+//		System.out.println(match);
+////		boolean r=matchDao.addMatch(match);
 //		boolean r1=matchDao.addMatch(match);
+//		System.out.println(match.getMatchId());
 //		System.out.println("result:"+r);
-		List<Match> list =matchDao.queryMatch();
-		System.out.println(list);
+//		List<Match> list =matchDao.queryMatch();
+//		System.out.println(list);
 //		System.out.println("num:"+matchDao.queryMatchNum());
 //		System.out.println(matchDao.queryReferee());
 //		Referee referee=new Referee("2","/sdfsaf","namea","sadhf");

@@ -59,6 +59,7 @@ const app=new Vue({
             this.sentChecked(this.title)
         },
         settimed(week){
+            this.title="场地一周信息"
             var object = this
             $.ajax({
                 url: "../place/placeToSelectWeek",

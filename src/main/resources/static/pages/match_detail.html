@@ -38,49 +38,16 @@
                 <div class="input-group-prepend">
                     <span class="label_key">赛事裁判:</span>
                 </div>
-                <span style="padding-top: 5px">{{match.refereeId}}</span>
+                <span style="padding-top: 5px">{{match.matchRefereename}}</span>
             </div>
             <div class="option input-group mb-3">
-                <!--                <div class="input-group-prepend">-->
-                <!--                    <span class="label_key">赛事场地:</span>-->
-                <!--                </div>-->
                 <div class="accordion" id="accordionExample" style="width: 100%">
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h6 class="mb-0">
                                 <span>赛事场地</span>
-                                <!--                                <span data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"-->
-                                <!--                                      aria-controls="collapseOne" class="float-lg-right">-->
-                                <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-                                <!--                                         class="bi bi-plus-circle" viewBox="0 0 16 16">-->
-                                <!--                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>-->
-                                <!--                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>-->
-                                <!--                                    </svg>-->
-                                <!--                                </span>-->
                             </h6>
                         </div>
-                        <!--                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"-->
-                        <!--                             data-parent="#accordionExample">-->
-                        <!--                            <div class="card-body">-->
-                        <!--                                <hr>-->
-                        <!--                                <div class="btn-toolbar justify-content-between" role="toolbar"-->
-                        <!--                                     aria-label="Toolbar with button groups">-->
-                        <!--                                    <div class="btn-group mr-2" role="group" aria-label="First group">-->
-                        <!--                                        <div>-->
-                        <!--                                            <button type="button" class="btn btn-primary btn-sm"-->
-                        <!--                                                    @click="getDataByCondition()">Apply-->
-                        <!--                                            </button>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    <div class="input-group">-->
-                        <!--                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse"-->
-                        <!--                                                data-target="#collapseOne" aria-expanded="true"-->
-                        <!--                                                aria-controls="collapseOne">Cancel-->
-                        <!--                                        </button>-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
                 <table class="table table-bordered">
@@ -93,12 +60,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>item.matchType}}</td>
-                        <td>item.matchTime}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td><span class="text_operate">delete</span></td>
+                    <tr v-for="(item,index) in match.applyList" :key="index" :content="item">
+                        <td>{{item.placeNo}}</td>
+                        <td>{{item.placeStorey}}</td>
+                        <td>{{item.applyDate | formatDate}}</td>
+                        <td>{{item.applyPeriod}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -109,78 +75,38 @@
                         <div class="card-header" id="headingTwo">
                             <h6 class="mb-0">
                                 <span>赛事器材</span>
-                                <!--                                <span data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"-->
-                                <!--                                      aria-controls="collapseTwo" class="float-lg-right">-->
-                                <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-                                <!--                                         class="bi bi-plus-circle" viewBox="0 0 16 16">-->
-                                <!--                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>-->
-                                <!--                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>-->
-                                <!--                                    </svg>-->
-                                <!--                                </span>-->
                             </h6>
                         </div>
-                        <!--                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"-->
-                        <!--                             data-parent="#accordionExample2">-->
-                        <!--                            <div class="card-body">-->
-                        <!--                                <hr>-->
-                        <!--                                <div class="btn-toolbar justify-content-between" role="toolbar"-->
-                        <!--                                     aria-label="Toolbar with button groups">-->
-                        <!--                                    <div class="btn-group mr-2" role="group" aria-label="First group">-->
-                        <!--                                        <div>-->
-                        <!--                                            <button type="button" class="btn btn-primary btn-sm"-->
-                        <!--                                                    @click="getDataByCondition()">Apply-->
-                        <!--                                            </button>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    <div class="input-group">-->
-                        <!--                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse"-->
-                        <!--                                                data-target="#collapseTwo" aria-expanded="true"-->
-                        <!--                                                aria-controls="collapseTwo">Cancel-->
-                        <!--                                        </button>-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th class="text-center" scope="col" width="15%">场地编号</th>
-                        <th class="text-center" scope="col" width="15%">场地楼层</th>
-                        <th class="text-center" scope="col" width="30%">日期</th>
-                        <th class="text-center" scope="col" width="30%">时间</th>
+                        <th class="text-center" scope="col" width="15%">器材编号</th>
+                        <th class="text-center" scope="col" width="15%">器材类型</th>
+                        <th class="text-center" scope="col" width="30%">开始时间</th>
+                        <th class="text-center" scope="col" width="30%">结束时间</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>item.matchType}}</td>
-                        <td>item.matchTime}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td>item.matchPlace}}</td>
+                    <tr v-for="(item,index) in match.ereservationList" :key="index" :centent="item">
+                        <td>{{item.eno}}</td>
+                        <td>{{item.etype}}</td>
+                        <td>{{item.estartrent}}</td>
+                        <td>{{item.eendrent}}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="option input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="label_key" >申请人&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{match.userId}}</span></span>
+                    <span class="label_key" >申请人&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{match.matchUsername}}</span></span>
                 </div>
             </div>
-            <div class="option input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="label_key" >审核人&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{match.reviewerId}}</span></span>
-                </div>
-            </div>
-            <!--            <div class="option input-group mb-3">-->
-            <!--                <div class="input-group-prepend">-->
-            <!--                    <span class="label_key"-->
-            <!--                          id="basic-addon4">审核人&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{match.reviewerId}}</span></span>-->
-            <!--                </div>-->
-            <!--            </div>-->
-<!--            <div class="btn-toolbar justify-content-end">-->
-<!--                <button class="bottom_btn btn btn-primary" type="reset">reset</button>-->
-<!--                <input class="bottom_btn btn btn-primary" type="button" value="submit" @click="submitInfo()">-->
+<!--            <div class="option input-group mb-3">-->
+<!--                <div class="input-group-prepend">-->
+<!--                    <span class="label_key" >审核人&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{match.matchReviewername}}</span></span>-->
+<!--                </div>-->
 <!--            </div>-->
         </form>
     </div>

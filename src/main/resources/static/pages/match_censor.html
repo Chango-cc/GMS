@@ -64,8 +64,9 @@
             <tr>
                 <th scope="col" width="20%">名称</th>
                 <th scope="col" width="11%">类型</th>
-                <th scope="col" width="25%">时间</th>
-                <th scope="col" width="20%">地点</th>
+                <th scope="col" width="35%">描述</th>
+<!--                <th scope="col" width="25%">时间</th>-->
+<!--                <th scope="col" width="20%">地点</th>-->
                 <th scope="col" width="12%">状态</th>
                 <th scope="col" width="12%">详情</th>
             </tr>
@@ -74,8 +75,9 @@
             <tr v-for="(item,index) in list" :key="index" :content="item">
                 <th scope="row">{{item.matchName}}</th>
                 <td>{{item.matchType}}</td>
-                <td>{{item.matchTime}}</td>
-                <td>{{item.matchPlace}}</td>
+                <td>{{item.matchDescribe}}</td>
+<!--                <td>{{item.matchTime}}</td>-->
+<!--                <td>{{item.matchPlace}}</td>-->
                 <td>{{item.status}}</td>
                 <td><a class="text_operate" :id="item.matchId" :href="'censorMatchDetail?id='+(item.matchId)">查看详情</a></td>
 <!--                <td><span class="text_operate" @click="detailPage(item.matchId)" :id="item.matchId">查看详情</span></td>-->
@@ -89,7 +91,7 @@
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
-                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="index">
+                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="'page'+(index)">
                     <a class="page-link">{{index}}</a>
                 </li>
                 <li class="page-item" @click="nextPage()">

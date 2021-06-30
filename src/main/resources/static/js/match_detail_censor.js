@@ -5,6 +5,7 @@ const app = new Vue({
         list: [],
         refereeName:"请选择",
         match:{},
+
     },
     methods: {
         getQueryString(name) {
@@ -34,10 +35,14 @@ const app = new Vue({
         },
         submitInfo() {
             const object=this;
+            var myselect=document.getElementById("referee_option");
+            var index=myselect.selectedIndex;
+            console.log(object.list);
+            console.log(object.list[index-1].refereeId);
             $.ajax({
                 url: "../match/censorMatchPass",
                 contentType: "application/json;charset=UTF-8",
-                data:{"id":object.getQueryString("id")},
+                data:{"id":object.getQueryString("id"),"refereeId":object.list[index-1].refereeId,"refereeName":object.list[index-1].refereeName},
                 type: "get",
                 success: function (result) {
                     console.log(object.match);

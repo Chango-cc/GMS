@@ -621,4 +621,17 @@ public class PlaceController {
         return "place_notice_user";
 
     }
+
+     /*
+    场地预约信息的修改
+     */
+    @RequestMapping("placeApplyToUpdata")
+    @ResponseBody
+    public String placeApplyToUpdata(@RequestBody TimeCollection timeCollection) throws ParseException {
+
+
+        placeApplyService.PlaceApplyChanged(timeCollection);
+        return "success";
+
+    }
 }

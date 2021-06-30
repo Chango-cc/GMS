@@ -25,7 +25,8 @@ new Vue({
                 }
             })
         },
-        getNum(object){
+        getNum(){
+            const object=this;
             $.ajax({
                 url: "../match/queryRefereeNum",
                 contentType: "application/json;charset=UTF-8",
@@ -57,6 +58,7 @@ new Vue({
                     console.log(result);
                     alert("删除成功");
                     object.getData();
+                    object.getNum();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
@@ -93,7 +95,7 @@ new Vue({
         }
     },
     mounted() {
-        this.getNum(this);
+        this.getNum();
         this.getData();
     },
 })

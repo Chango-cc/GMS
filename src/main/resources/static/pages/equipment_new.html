@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/match_query.css">
+    <title>器材购置新增</title>
+
+</head>
+<body>
+<div class="bg-white" style="padding: 10px 10px 10px 20px;">器材管理>>购置新增</div>
+<div class="content_body">
+    <div id="equiment_new" class="table_body bg-white">
+        <div class="container">
+            <div class="row" style="text-align: center">
+                <div class="col-sm-6">器材类型：
+                    <select @change="changeType($event)" style="width: 200px">
+                        <option value="">请选择</option>
+                        <option v-for="item in typelist" :value="item">{{item}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6">器材编号：
+                    <input type="text" placeholder="请输入五位数字" style="width: 200px" v-model="eno" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                </div>
+                <div class="col-sm-6" style="margin-top: 15px">购置费用：
+                    <input type="text" placeholder="请输入器材单价" style="width: 200px" v-model="ecost" onkeyup="value=value.replace(/[^\d.]/g,'')">￥
+                </div>
+                <div class="col-sm-6" style="margin-top: 15px">购置时间：
+                    <input type="date" style="width: 200px" v-model="epurtime">
+                </div>
+                <div class="col-sm-12" style="text-align: center;margin-top: 20px;">
+                    <button class="btn btn-primary" style="width: 150px" @click="addequipment">入库</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <script type="text/javascript" src="../js/equipment_new.js"></script>
+</body>
+</html>

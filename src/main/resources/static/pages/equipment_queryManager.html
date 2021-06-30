@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/match_query.css">
+    <title>维护器材</title>
+</head>
+<body>
+
+<div class="bg-white" style="padding: 10px 10px 10px 20px;">器材管理>>维护器材</div>
+<div class="content_body">
+    <div id="table_match" class="table_body bg-white">
+        <div>器材类型：
+            <select @change="changeType($event)">
+                <option value="">请选择</option>
+                <option v-for="item in typelist" :value="item">{{item}}</option>
+            </select>
+            <select @change="changeSitu($event)">
+                <option value="">请选择</option>
+                <option value="在库">在库</option>
+                <option value="租用中">租用中</option>
+                <option value="维修中">维修中</option>
+            </select>
+            <button class="btn btn-primary" @click="query">查询</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>器材编号</th>
+                <th>类型</th>
+                <th>购置费用</th>
+                <th>购置时间</th>
+                <th>当前状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in list" >
+                <td>{{item.eno}}</td>
+                <td>{{item.etype}}</td>
+                <td>{{item.ecost}}￥</td>
+                <td>{{item.epurtime}}</td>
+                <td>{{item.esitution}}</td>
+                <td>
+                    <button class="btn btn-primary" @click="repair_check(item.eno)">维修</button>
+                    <button class="btn btn-danger" style="margin-left: 15px" @click="remove(item.eno)">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- 模态框 -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- 模态框头部 -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">维修信息</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- 模态框主体 -->
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6" >器材编号：<input type="text" ref="repair_eno" readonly="readonly"></div>
+                                <div class="col-sm-6" >器材类型：<input type="text" ref="repair_type" readonly="readonly"></div>
+                                <div class="col-sm-6" style="margin-top: 10px;">维修费用：<input type="text" ref="repair_cost" onkeyup="value=value.replace(/[^\d.]/g,'')"></div>
+                                <div class="col-sm-6" style="margin-top: 10px;">维修备注:<input type="text" ref="repair_remark"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" @click="repair">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul id="ul_pages" class="pagination justify-content-end">
+                <li class="page-item" @click="previousPage()">
+                    <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="index">
+                    <a class="page-link">{{index}}</a>
+                </li>
+                <li class="page-item" @click="nextPage()">
+                    <a class="page-link">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script type="text/javascript" src="../js/equipment_queryManager.js"></script>
+
+</body>
+</html>

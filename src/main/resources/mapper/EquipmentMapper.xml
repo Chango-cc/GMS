@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.gdou.equipmentmanage.dao.EquipmentDao">
+    <insert id="addEquipment" parameterType="edu.gdou.equipmentmanage.bean.Equipment">
+        insert into gms.Equipment (eno, etype, ecost, epurtime, esitution)
+            value (#{eno},#{etype},#{ecost},#{epurtime},#{esitution})
+    </insert>
+
+    <select id="queryEquipmentByEno" parameterType="String" resultType="edu.gdou.equipmentmanage.bean.Equipment">
+        select *
+        from gms.Equipment
+        where eno=#{eno}
+<!--        <where>-->
+<!--            <if test="eno != null and eno !=''">-->
+<!--                and `eno` like concat('%',#{eno},'%')-->
+<!--            </if>-->
+<!--        </where>-->
+    </select>
+
+    <delete id="deleteEquipmentByEno" parameterType="String">
+        delete from gms.Equipment where eno = #{eno}
+    </delete>
+
+    <update id="updateEquipmentByEno" parameterType="String">
+        update gms.Equipment
+        set esitution=#{sitution}
+        where eno=#{eno}
+    </update>
+
+    <select id="queryEquipmentAll" resultType="edu.gdou.equipmentmanage.bean.Equipment">
+        select *
+        from gms.Equipment
+    </select>
+
+    <select id="queryEquipmentNum" resultType="int">
+        select count(*)
+        from gms.Equipment
+    </select>
+
+    <select id="queryEquipmentLimit" resultType="edu.gdou.equipmentmanage.bean.Equipment">
+        SELECT *
+        FROM gms.Equipment limit #{offset},#{length};
+    </select>
+
+    <select id="queryEquipmentByEnEs" resultType="edu.gdou.equipmentmanage.bean.Equipment">
+        select *
+        from gms.Equipment
+        where 1=1
+        <if test="type!=null and type!=''">
+            and etype=#{type}
+        </if>
+        <if test="sitution!=null and sitution!=''">
+            and esitution=#{sitution}
+        </if>
+        limit #{offset},#{length};
+    </select>
+
+    <select id="queryEquipmentNum111" resultType="int">
+        select count(*)
+        from gms.Equipment
+        where 1=1
+        <if test="type!=null and type!=''">
+            and etype=#{type}
+        </if>
+        <if test="sitution!=null and sitution!=''">
+            and esitution=#{sitution}
+        </if>
+    </select>
+
+    <select id="queryEquipmentEtype" resultType="String">
+        select DISTINCT etype
+        from gms.Equipment
+    </select>
+
+    <insert id="addEreservation" parameterType="edu.gdou.equipmentmanage.bean.Ereservation">
+        insert into gms.Ereservation (eno, etype, estartrent, eendrent,user_id,match_id )
+            value (#{eno},#{etype},#{estartrent},#{eendrent},#{userid},#{matchid})
+    </insert>
+
+    <insert id="addErepair" parameterType="edu.gdou.equipmentmanage.bean.Erepair">
+        insert into gms.Erepair (eno, etype, erepaircost, erepairremark)
+            value (#{eno},#{etype},#{erepaircost},#{erepairremark})
+    </insert>
+
+    <select id="queryEreservationByEnUser" resultType="edu.gdou.equipmentmanage.bean.Ereservation">
+        select *
+        from gms.Ereservation
+        where 1=1
+        <if test="eno!=null and eno!=''">
+            and eno=#{eno}
+        </if>
+        <if test="userid!=null and userid!=''">
+            and user_id=#{userid}
+        </if>
+        limit #{offset},#{length};
+    </select>
+    <select id="queryEreservationByMatchId" resultType="edu.gdou.equipmentmanage.bean.Ereservation">
+        select *
+        from gms.Ereservation
+        where match_id=#{matchId}
+    </select>
+
+    <select id="queryEreservationNum" resultType="int">
+        select count(*)
+        from gms.Ereservation
+        where 1=1
+        <if test="eno!=null and eno!=''">
+            and eno=#{eno}
+        </if>
+        <if test="userid!=null and userid!=''">
+            and user_id=#{userid}
+        </if>
+    </select>
+
+    <select id="queryErepairByEnEt" resultType="edu.gdou.equipmentmanage.bean.Erepair">
+        select *
+        from gms.Erepair
+        where 1=1
+        <if test="eno!=null and eno!=''">
+            and eno=#{eno}
+        </if>
+        <if test="type!=null and type!=''">
+            and etype=#{type}
+        </if>
+        limit #{offset},#{length};
+    </select>
+
+    <select id="queryErepairNum" resultType="int">
+        select count(*)
+        from gms.Erepair
+        where 1=1
+        <if test="eno!=null and eno!=''">
+            and eno=#{eno}
+        </if>
+        <if test="type!=null and type!=''">
+            and etype=#{type}
+        </if>
+    </select>
+
+    <delete id="deleteEreservationByEno" parameterType="String">
+        delete from gms.Ereservation where eno = #{eno}
+    </delete>
+
+    <delete id="deleteErepairByEno" parameterType="String">
+        delete from gms.Erepair where eno = #{eno}
+    </delete>
+</mapper>

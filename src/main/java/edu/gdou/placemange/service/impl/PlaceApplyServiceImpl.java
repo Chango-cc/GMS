@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.gdou.placemange.entity.Place;
 import edu.gdou.placemange.entity.PlaceApply;
 import edu.gdou.placemange.entity.PlaceAvailable;
+import edu.gdou.placemange.entity.TimeCollection;
 import edu.gdou.placemange.mapper.PlaceApplyMapper;
 import edu.gdou.placemange.service.PlaceApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,27 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
         }
 
     }
+//    /*
+//    插入的赛事场地
+//     */
+//    @Override
+//    public void PlaceApplyInserted(List<PlaceAvailable> keepList,String matchId) throws ParseException {
+//
+//        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+//        for (int i = 0 ; i<keepList.size();i++){
+//            System.out.println("对应的场地编号是：   "+keepList.get(i).getPlaceNo());
+//            Date date = dateformat.parse(keepList.get(i).getApplyDate());
+//            PlaceApply placeApply = new PlaceApply();
+//            placeApply.setPlaceNo(keepList.get(i).getPlaceNo());
+//            placeApply.setPlaceStorey(keepList.get(i).getPlaceStorey());
+//            placeApply.setPlaceType(keepList.get(i).getPlaceType());
+//            placeApply.setApplyDate(date);
+//            placeApply.setApplyPeriod(keepList.get(i).getApplyPeriod());
+//            placeApply.setApplyType(matchId);
+//            placeApply.setApplyState("待审核");
+//            int rows = placeApplyMapper.insert(placeApply);
+//            System.out.println("插入产生的影响行数"+rows);
+//        }
 
     /*
     插入的赛事场地
@@ -104,6 +126,25 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
 
 
     }
+
+    @Override
+    public void PlaceApplyStateUpdateMatch(String matchId) {
+
+        System.out.println("数据库层次------------------------------");
+        PlaceApply placeApply = new PlaceApply();
+        //赋值
+        QueryWrapper<PlaceApply> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("apply_type",matchId);
+        placeApply.setApplyState("已退订");
+        int rows = placeApplyMapper.update(placeApply,queryWrapper);
+        System.out.println("成功修改场地状态的行数为"+rows);
+
+    }
+
+//    @Override
+//    public void PlaceApplyInserted(List<PlaceAvailable> keepList, String matchId) throws ParseException {
+//
+//    }
 
     /*
    查询场地可用信息
@@ -248,6 +289,28 @@ public class PlaceApplyServiceImpl extends ServiceImpl<PlaceApplyMapper, PlaceAp
             msg = "退订失败";
             System.out.println(msg);
         }
+    }
+
+    /*
+修改个人场地预约的信息
+ */
+    @Override
+    public void PlaceApplyChanged(TimeCollection timeCollection) throws ParseException {
+
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        PlaceAvailable  placeAvailable = timeCollection.getPlaceAvailable();
+        Date date = dateformat.parse(placeAvailable.getApplyDate());
+        //输入信息
+        PlaceApply placeApply = new PlaceApply();
+        placeApply.setApplyId(Integer.valueOf(timeCollection.getDate()));
+        placeApply.setApplyDate(date);
+        placeApply.setPlaceNo(placeAvailable.getPlaceNo());
+        placeApply.setPlaceType(placeAvailable.getPlaceType());
+        placeApply.setPlaceStorey(placeAvailable.getPlaceStorey());
+        placeApply.setApplyPeriod(placeAvailable.getApplyPeriod());
+        int rows = placeApplyMapper.updateById(placeApply);
+        System.out.println("插入产生的影响行数"+rows);
+
     }
 
     /*

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <!--    <link rel="stylesheet" href="../css/main.css">-->
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/place_keep.css">
+    <!--    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <title>Title</title>
+</head>
+<body>
+<div class="container" id="table_placeNotice">
+
+    <div class="card card-margin"  >
+        <div class="card-header">
+            <div>
+                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;<span>场馆公告列表</span>
+            </div>
+            <div style="cursor: pointer">
+                <i id="square" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop"></i>
+                <label for="square"  class="label-margin" >添加场馆公告</label>
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">
+                                    <i id="squareed" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop"></i>
+                                    <label for="squareed"  class="label-margin" >添加场馆公告</label>
+                                </h5>
+                                <button id="closeing" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+
+                                <form class="was-validated"  >
+                                    <div class="mb-3">
+                                        <div class="input-group is-invalid">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrepend">
+                                                    <i class="fa fa-list-ol" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;公告标题
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="noticeTitle" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="input-group is-invalid">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrepended">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;公告正文
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="noticeContent" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary" @click="toAddNotice()">确定</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;&nbsp;
+                <i id="refresh" class="fa fa-refresh " aria-hidden="true" ></i>
+                <label for="refresh"  style="margin:0px;">刷新</label>
+            </div>
+        </div>
+        <div style="padding: 20px">
+            <table class="table " id="msgtable">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">公告标题</th>
+                    <th scope="col">发布日期</th>
+                    <th scope="col">发布人</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in list" :key="index" :content="item">
+                    <th>
+                        {{index+1}}
+                    </th>
+                    <td>{{item.noticeTitle}}</td>
+                    <td>{{item.noticeDate  | formatDate }}</td>
+                    <td>{{item.placeManage}}</td>
+                    <td>
+                        <div  class="placeoption">
+                            <a  class="badge badge-info"><i class="fa fa-paperclip fa-2x" aria-hidden="true" data-toggle="modal" :data-target="'#staticBackdropDetail'+index"></i></a>
+                            <div class="modal fade" :id="'staticBackdropDetail'+index" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" :id="'staticBackdropLabelEdit'+index">
+                                                <i id="squareedDetail" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop"></i>
+                                                <label for="squareedEdit"  class="label-margin" >场馆公告详情</label>
+                                            </h5>
+                                            <button id="closeDetail" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <form class="was-validated"  >
+
+                                                <div class="mb-3">
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrependedeTitleDetail">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;公告标题
+                                                </span>
+                                                        </div>
+                                                        <input type="text" class="form-control " aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="item.noticeTitle"  disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrependedeContentDetailTime">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;发布时间
+                                                </span>
+                                                        </div>
+                                                        <input type="text" class="form-control " aria-describedby="validatedInputGroupPrepend" name="placeNo" :value="item.noticeDate | formatDate"    disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrependedeContentDetailMan">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;发布人
+                                                </span>
+                                                        </div>
+                                                        <input type="text" class="form-control " aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="item.placeManage"  disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrependedeContentDetail">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;公告正文
+                                                </span>
+
+                                                        </div>
+                                                        <textarea type="text" class="form-control " aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="item.noticeContent"  disabled></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a  class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true" data-toggle="modal" :data-target="'#staticBackdropEdit'+index" ></i></a>
+                            <div class="modal fade" :id="'staticBackdropEdit'+index" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" :id="'staticBackdropLabelEdit'+index">
+                                                <i id="squareedEdit" class="fa fa-plus-square pointer" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop"></i>
+                                                <label for="squareedEdit"  class="label-margin" >修改场馆公告</label>
+                                            </h5>
+                                            <button id="closeEdit" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <form class="was-validated"  >
+
+                                                <div class="mb-3">
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrependedeTitle">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;公告标题
+                                                </span>
+                                                        </div>
+                                                        <input type="text" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="item.noticeTitle"  required>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text" id="validatedInputGroupPrependedeContent">
+                                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;公告正文
+                                                </span>
+                                                        </div>
+                                                        <textarea type="text" class="form-control " aria-describedby="validatedInputGroupPrepend" name="placeNo" v-model="item.noticeContent"  required></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                                    <button type="submit" class="btn btn-primary" @click="changeNotice(item.noticeId,index)">确定</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a  class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="deleteNotice(item.noticeId,index)"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-muted">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item " >
+                        <a class="page-link"  tabindex="-1"  @click="turnpagepre()">Previous</a>
+                    </li>
+                    <li class="page-item" v-for="index in totalpage" :key="index" :content="item" :class="(current == (index )) ? 'active' : '' ">
+                        <a class="page-link"  @click="turnpage(index)">{{index}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"  @click="turnpagenext()">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/place_notice.js"></script>
+</body>
+</html>

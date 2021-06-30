@@ -10,6 +10,17 @@ const app = new Vue({
         match:{},
         type:""
     },
+    filters: {
+        formatDate: function (value) {
+            let date = new Date(value);
+            let y = date.getFullYear();
+            let MM = date.getMonth() + 1;
+            MM = MM < 10 ? ('0' + MM) : MM;
+            let d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            return y + '-' + MM + '-' + d ;
+        }
+    },
     methods: {
         getQueryString(name) {
             let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -51,6 +62,36 @@ const app = new Vue({
                 }
             })
         },
+        deleteConfirm(){
+            var result=confirm("are you sure delete match 确定要取消吗");
+            console.log(this.match);
+            if (result){
+                this.cancelMatch();
+            }else {
+                console.log("取消操作");
+                console.log(this.match);
+            }
+        },
+        cancelMatch(){
+            const object=this;
+            const id=this.match.matchId;
+            $.ajax({
+                url: "../match/deleteMatch",
+                contentType: "application/json;charset=UTF-8",
+                data:{"id":id},
+                type: "get",
+                success: function (result) {
+                    console.log(result);
+                    if (result) {
+                        alert("取消成功");
+                        object.match=null;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("error message：" + XMLHttpRequest.responseText);
+                }
+            })
+        }
     },
     mounted() {
         console.log("local:"+this.getQueryString("id"));

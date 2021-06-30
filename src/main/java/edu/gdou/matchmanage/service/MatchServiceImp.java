@@ -1,25 +1,51 @@
 package edu.gdou.matchmanage.service;
 
+import edu.gdou.equipmentmanage.bean.Ereservation;
+import edu.gdou.equipmentmanage.service.EquipmentService;
 import edu.gdou.matchmanage.bean.Match;
 import edu.gdou.matchmanage.bean.Referee;
 import edu.gdou.matchmanage.dao.MatchDao;
+import edu.gdou.placemange.service.PlaceApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Service
 public class MatchServiceImp implements MatchService{
     @Autowired
     private MatchDao matchDao;
+    @Autowired
+    PlaceApplyService placeApplyService;
+    @Autowired
+    EquipmentService equipmentService;
     @Override
     public boolean addMatch(Match match) {
         match.setStatus("待审核");
-        return matchDao.addMatch(match);
+        System.out.println("match:"+match);
+        System.out.println(match.getEreservationList());
+        boolean result=matchDao.addMatch(match);
+        for (Ereservation e:match.getEreservationList()) {
+            e.setUserid(match.getUserId());
+            e.setMatchid(match.getMatchId());
+            equipmentService.addEreservation(e);
+            equipmentService.updateEquipmentByEno(e.getEno(),"租用中");
+        }
+        try {
+            placeApplyService.PlaceApplyInserted(match.getKeepList(),match.getMatchId(),match.getUserId());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public boolean deleteMatch(int id) {
+        //取消场地预约，
+        String matchId=id+"";
+        placeApplyService.PlaceApplyStateUpdateMatch(matchId);
+//        equipmentService.
         return matchDao.deleteMatch(id);
     }
 
@@ -30,9 +56,9 @@ public class MatchServiceImp implements MatchService{
     }
 
     @Override
-    public boolean updateMatchStatus(int id, String status) {
-        status="已审核";
-        return matchDao.updateMatchStatus(id,status);
+    public boolean updateMatchStatus(int id, String refereeId,String refereeName) {
+        String status="已审核";
+        return matchDao.updateMatchStatus(id,status,  refereeId, refereeName);
     }
 
     @Override
@@ -47,7 +73,15 @@ public class MatchServiceImp implements MatchService{
 
     @Override
     public Match queryMatchById(int id) {
-        return matchDao.queryMatchById(id);
+        Match match=matchDao.queryMatchById(id);
+        match.setApplyList(placeApplyService.PlaceApplySelectMatch(match.getMatchId()));
+        match.setEreservationList(equipmentService.queryEreservationByMatchId(match.getMatchId()));
+        return match;
+    }
+
+    @Override
+    public int queryMatchNumByUser(String id) {
+        return matchDao.queryMatchNumByUser(id);
     }
 
     @Override

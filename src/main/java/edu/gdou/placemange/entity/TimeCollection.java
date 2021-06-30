@@ -7,6 +7,7 @@ public class TimeCollection {
     private String date;
     private List<String> timelist;
     private List<PlaceAvailable> keepList;
+    private PlaceAvailable placeAvailable;
 
     public String getDate() {
         return date;
@@ -32,12 +33,21 @@ public class TimeCollection {
         this.keepList = keepList;
     }
 
+    public PlaceAvailable getPlaceAvailable() {
+        return placeAvailable;
+    }
+
+    public void setPlaceAvailable(PlaceAvailable placeAvailable) {
+        this.placeAvailable = placeAvailable;
+    }
+
     @Override
     public String toString() {
         return "TimeCollection{" +
                 "date='" + date + '\'' +
                 ", timelist=" + timelist +
                 ", keepList=" + keepList +
+                ", placeAvailable=" + placeAvailable +
                 '}';
     }
 }

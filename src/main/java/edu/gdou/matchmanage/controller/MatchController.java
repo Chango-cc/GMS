@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import edu.gdou.matchmanage.bean.Match;
 import edu.gdou.matchmanage.bean.Referee;
 import edu.gdou.matchmanage.service.MatchService;
+import edu.gdou.usermanage.entity.Gmsuser;
 import edu.gdou.utilities.Access;
 import edu.gdou.utilities.ParentMenu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -105,10 +107,19 @@ public class MatchController {
         System.out.println(match);
         return match;
     }
+    //获取记录行数
+    @RequestMapping("queryMatchNumByUser")
+    @ResponseBody
+    public int queryMatchNumByUser(HttpSession httpSession) {
+        Gmsuser user = (Gmsuser) httpSession.getAttribute("user");
+        String id=user.getUserId();
+        return service.queryMatchNumByUser(id);
+    }
     @RequestMapping("queryMatchByUser")
     @ResponseBody
-    public List<Match> queryMatchByUser(int offset,int length){
-        String id="1";
+    public List<Match> queryMatchByUser(int offset,int length,HttpSession httpSession){
+        Gmsuser user = (Gmsuser) httpSession.getAttribute("user");
+        String id=user.getUserId();
         List<Match> list=service.queryMatchByUser(id,offset,length);
         System.out.println(list);
         return list;
@@ -141,21 +152,25 @@ public class MatchController {
 
     @RequestMapping("addMatch")
     @ResponseBody
-    public boolean addMatch(@RequestBody Match match) {
-//        System.out.println(match);
+    public boolean addMatch(@RequestBody Match match, HttpSession httpSession) {
+        System.out.println(match);
+        System.out.println(match.getKeepList());
+        Gmsuser user = (Gmsuser) httpSession.getAttribute("user");
+        match.setUserId(user.getUserId());
+        match.setMatchUsername(user.getUserName());
         return service.addMatch(match);
     }
     @RequestMapping("updateMatch")
     @ResponseBody
-    public boolean updateMatch(@RequestBody Match match) {
+    public boolean updateMatch(@RequestBody Match match, HttpSession httpSession) {
         System.out.println(match);
         return service.updateMatch(match);
     }
     @RequestMapping("censorMatchPass")
     @ResponseBody
-    public boolean censorMatch(int id,String status) {
+    public boolean censorMatch(int id, String refereeId,String refereeName, HttpSession httpSession) {
 //        System.out.println(match);
-        return service.updateMatchStatus(id,status);
+        return service.updateMatchStatus(id,refereeId,refereeName);
     }
     @RequestMapping("deleteMatch")
     @ResponseBody
@@ -166,8 +181,9 @@ public class MatchController {
 
     @RequestMapping("getMenu")
     @ResponseBody
-    public List<ParentMenu> menu() {
-        return Access.getList();
+    public List<ParentMenu> menu(HttpSession httpSession) {
+        Gmsuser user = (Gmsuser) httpSession.getAttribute("user");
+        return Access.getList(user);
     }
 
 

@@ -62,7 +62,7 @@
                                 </span>
                             </h6>
                         </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
                                 <hr>
                                 <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
@@ -84,16 +84,22 @@
                         <th class="text-center" scope="col" width="15%">场地楼层</th>
                         <th class="text-center" scope="col" width="30%">日期</th>
                         <th class="text-center" scope="col" width="30%">时间</th>
-                        <th class="text-center" scope="col" width="20%">操作</th>
+<!--                        <th class="text-center" scope="col" width="20%">操作</th>-->
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>item.matchType}}</td>
-                        <td>item.matchTime}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td><span class="text_operate">delete</span></td>
+<!--                    <tr>-->
+<!--                        <td>item.matchType}}</td>-->
+<!--                        <td>item.matchTime}}</td>-->
+<!--                        <td>item.matchPlace}}</td>-->
+<!--                        <td>item.matchPlace}}</td>-->
+<!--                        <td><span class="text_operate">delete</span></td>-->
+<!--                    </tr>-->
+                    <tr v-for="(item,index) in match.applyList" :key="index" :content="item">
+                        <td>{{item.placeNo}}</td>
+                        <td>{{item.placeStorey}}</td>
+                        <td>{{item.applyDate | formatDate}}</td>
+                        <td>{{item.applyPeriod}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -112,7 +118,7 @@
                                 </span>
                             </h6>
                         </div>
-                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                              data-parent="#accordionExample2">
                             <div class="card-body">
                                 <hr>
@@ -130,27 +136,25 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th class="text-center" scope="col" width="15%">场地编号</th>
-                        <th class="text-center" scope="col" width="15%">场地楼层</th>
-                        <th class="text-center" scope="col" width="30%">日期</th>
-                        <th class="text-center" scope="col" width="30%">时间</th>
-                        <th class="text-center" scope="col" width="20%">操作</th>
+                        <th class="text-center" scope="col" width="15%">器材编号</th>
+                        <th class="text-center" scope="col" width="15%">器材类型</th>
+                        <th class="text-center" scope="col" width="30%">开始时间</th>
+                        <th class="text-center" scope="col" width="30%">结束时间</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>item.matchType}}</td>
-                        <td>item.matchTime}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td>item.matchPlace}}</td>
-                        <td><span class="text_operate">delete</span></td>
+                    <tr v-for="(item,index) in match.ereservationList" :key="index" :centent="item">
+                        <td>{{item.eno}}</td>
+                        <td>{{item.etype}}</td>
+                        <td>{{item.estartrent}}</td>
+                        <td>{{item.eendrent}}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="btn-toolbar justify-content-end">
-                <button class="bottom_btn btn btn-primary" type="reset">reset</button>
-                <input class="bottom_btn btn btn-primary" type="button" value="submit" @click="submitInfo()">
+                <button class="bottom_btn btn btn-primary" type="reset" @click="deleteConfirm()">取消赛事</button>
+                <input class="bottom_btn btn btn-primary" type="button" value="提交更改" @click="submitInfo()">
             </div>
         </form>
     </div>

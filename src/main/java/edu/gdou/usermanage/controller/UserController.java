@@ -69,7 +69,8 @@ public class UserController {
 
     @GetMapping("/login")
     public String login(){
-        return "login";
+        System.out.println("logintest");
+        return "../login";
     }
 
     @PostMapping("/doLogin")
@@ -90,12 +91,12 @@ public class UserController {
     @GetMapping("/doLogout")
     public String doLogout(HttpSession session){
         session.invalidate();
-        return "login";
+        return "redirect:1";
     }
 
     @GetMapping("/register")
     public String register(){
-        return "register";
+        return "../register";
     }
 
     //BindingResult表示错误消息存放的容器，必须紧跟pojo对象之后

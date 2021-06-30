@@ -14,10 +14,11 @@ public interface MatchDao {
     boolean addMatch(Match match);
     boolean deleteMatch(int id);
     boolean updateMatch(Match match);
-    boolean updateMatchStatus(int id,String status);
+    boolean updateMatchStatus(int id,String status,String refereeId,String refereeName);
     int queryMatchNum();
     List<Match> queryMatch();
     Match queryMatchById(int id);
+    int queryMatchNumByUser(String id);
     List<Match> queryMatchByUser(String id,int offset,int length);
     List<Match> queryMatchByStatus(String status);
     int queryMatchNumByConditionOne(String[] type);

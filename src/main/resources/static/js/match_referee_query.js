@@ -24,7 +24,8 @@ new Vue({
                 }
             })
         },
-        getNum(object){
+        getNum(){
+            const object=this;
             $.ajax({
                 url: "../match/queryRefereeNum",
                 contentType: "application/json;charset=UTF-8",
@@ -71,7 +72,7 @@ new Vue({
         }
     },
     mounted() {
-        this.getNum(this);
+        this.getNum();
         this.getData(this,(this.page-1)*this.length,this.length);
     },
 })

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import edu.gdou.placemange.entity.PlaceApply;
 import edu.gdou.placemange.entity.PlaceAvailable;
+import edu.gdou.placemange.entity.TimeCollection;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -33,6 +34,17 @@ public interface PlaceApplyService extends IService<PlaceApply> {
     修改场地申请状态
      */
     public void PlaceApplyStateUpdate(Integer applyId,String applyState);
+
+    /*
+    修改场地申请状态
+     */
+    public void PlaceApplyStateUpdateMatch(String match);
+    //    /*
+//插入赛事场地申请
+// */
+//    public void PlaceApplyInserted(List<PlaceAvailable> keepList,String matchId) throws ParseException;
+//
+
     /*
     查询场地可用信息
      */
@@ -57,6 +69,11 @@ public interface PlaceApplyService extends IService<PlaceApply> {
     退订个人目前的场地预约信息
      */
     public void PlaceApplyCancel(Integer applyId,Date applyDate);
+
+    /*
+修改个人场地预约的信息
+ */
+    public void PlaceApplyChanged(TimeCollection timeCollection) throws ParseException;
 
     /*
     修改个人场地预约的信息

@@ -117,7 +117,7 @@
                                     <td>{{item.applyPeriod}}</td>
                                     <td>
                                         <div  class="placeoption">
-                                            <a href="../place/toPlaceKeepUpdate" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  @click="tochangkeep()"></i></a>
+                                            <a :href="'../place/toPlaceKeepUpdate?a='+item.applyId" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  @click="tochangkeep()"></i></a>
                                             <a  class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="applyDelete(item.applyId,index)"></i></a>
 <!--                                            <a  class="badge badge-success"><i class="fa fa-check-square fa-2x" aria-hidden="true" @click="applySuccess(item.applyId)"></i></a>-->
 <!--                                            <a  class="badge badge-danger"><i class="fa fa-times-circle fa-2x" aria-hidden="true" @click="applyFail(item.applyId)"></i></a>-->
@@ -155,7 +155,7 @@
                                     <td>{{item.applyPeriod}}</td>
                                     <td>
                                         <div  class="placeoption">
-                                            <a  class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
+                                            <a :href="'../place/toPlaceKeepUpdate?a='+item.applyId" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
                                             <a  class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="applyDelete(item.applyId)"></i></a>
                                         </div>
                                     </td>
@@ -190,7 +190,7 @@
                                     <td>{{item.applyPeriod}}</td>
                                     <td>
                                         <div  class="placeoption">
-                                            <a  class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
+                                            <a :href="'../place/toPlaceKeepUpdate?a='+item.applyId" class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -230,8 +230,6 @@
                                     <td>
                                         <div  class="placeoption">
                                             <a  class="badge badge-info"><i class="fa fa-toggle-off fa-2x" aria-hidden="true" :id="'in'+index" @click="setTime(item.applyId,index,item.applyStart,item.applyEnd,item.applyPeriod)"></i></a>
-                                            <a  class="badge badge-info"><i class="fa fa-pencil fa-2x" aria-hidden="true"  ></i></a>
-                                            <a  class="badge badge-danger"><i class="fa fa-trash fa-2x" aria-hidden="true" @click="applyDelete(item.applyId)"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -388,15 +386,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="pre" name="time" @click="settime('上周')">
+                            <input type="radio" class="custom-control-input" id="pre" name="time" @click="settimed('上周')">
                             <label class="custom-control-label" for="pre">上周</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="now" name="time" @click="settime('本周')" checked>
+                            <input type="radio" class="custom-control-input" id="now" name="time" @click="settimed('本周')" checked>
                             <label class="custom-control-label" for="now">本周</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="next" name="time" @click="settime('下周')">
+                            <input type="radio" class="custom-control-input" id="next" name="time" @click="settimed('下周')">
                             <label class="custom-control-label" for="next">下周</label>
                         </div>
                     </div>

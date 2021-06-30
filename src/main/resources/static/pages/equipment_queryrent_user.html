@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/match_query.css">
+    <title>查看已租用器材</title>
+</head>
+<body>
+
+<div class="bg-white" style="padding: 10px 10px 10px 20px;">器材管理>>查看已租用器材</div>
+<div class="content_body">
+    <div id="table_match" class="table_body bg-white">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>器材编号</th>
+                <th>器材类型</th>
+                <th>开始租用时间</th>
+                <th>结束租用时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in list" >
+                <td>{{item.eno}}</td>
+                <td>{{item.etype}}</td>
+                <td>{{item.estartrent}}</td>
+                <td>{{item.eendrent}}</td>
+                <td>
+                    <button class="btn btn-success" @click="cancel(item.eno)">取消租用</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul id="ul_pages" class="pagination justify-content-end">
+                <li class="page-item" @click="previousPage()">
+                    <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li class="page-item" v-for="index of pages" :key="index" @click="goto(index)" :id="index">
+                    <a class="page-link">{{index}}</a>
+                </li>
+                <li class="page-item" @click="nextPage()">
+                    <a class="page-link">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script type="text/javascript" src="../js/equipment_queryrent_user.js"></script>
+
+</body>
+</html>

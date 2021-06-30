@@ -62,8 +62,10 @@ new Vue({
                 data: {"status":this.picked,"type":str_type},
                 type: "get",
                 success: function (result) {
-                    object.setPages(Math.ceil(result / 5));
-                    document.getElementById("1").classList.add("active");
+                    object.setPages(Math.ceil(result / object.length));
+                    if (object.pages > 0) {
+                        document.getElementById("page1").classList.add("active");
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("error message：" + XMLHttpRequest.responseText);
@@ -72,12 +74,6 @@ new Vue({
         },
         setPages(pages){
             this.pages = pages;
-        },
-        setActive(newIndex) {
-            document.getElementById("ul_pages").childNodes[this.page + 1].classList.remove("active");
-            document.getElementById("ul_pages").childNodes[newIndex + 1].classList.add("active");
-            this.page = newIndex;
-            this.getData();
         },
         nextPage: function () {
             if (this.page < this.pages) {
@@ -96,9 +92,8 @@ new Vue({
             this.getData();
         },
         getDataByCondition:function (){
-            this.page=1;
+            this.goto(1);
             this.getNum();
-            this.getData();
         },
         reset:function (){
             this.picked="all"
@@ -106,9 +101,6 @@ new Vue({
                 checkbox.checked=true;
             }
         },
-        // detailPage(id){
-        //     location.href="matchDetail?id="+id;
-        // }
     },
     mounted() {
         this.getNum();

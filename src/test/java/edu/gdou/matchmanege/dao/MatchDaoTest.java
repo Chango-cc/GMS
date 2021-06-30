@@ -21,15 +21,15 @@ public class MatchDaoTest {
     private MatchDao matchDao;
     @Test
     public void Test(){
-        matchService=new MatchServiceImp();
-        System.out.println("Service:"+matchService);
-        System.out.println("DAO:"+matchDao);
-        Timestamp a=new Timestamp(1242153214);
-        Match match=new Match("3","name3",  a,"place3","tools3","type3","describe3","null","null",1,"1");
-        boolean r=matchDao.addMatch(match);
-        System.out.println("result:"+r);
-        List<Match>list =matchDao.queryMatch();
-        System.out.println(list);
+//        matchService=new MatchServiceImp();
+//        System.out.println("Service:"+matchService);
+//        System.out.println("DAO:"+matchDao);
+//        Timestamp a=new Timestamp(1242153214);
+//        Match match=new Match("3","name3", "a","place3","tools3","type3","describe3","null","null",1,"1");
+//        boolean r=matchDao.addMatch(match);
+//        System.out.println("result:"+r);
+//        List<Match>list =matchDao.queryMatch();
+//        System.out.println(list);
     }
     @Test
     public void test1(){

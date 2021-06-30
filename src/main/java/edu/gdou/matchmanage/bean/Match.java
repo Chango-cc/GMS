@@ -1,33 +1,27 @@
 package edu.gdou.matchmanage.bean;
 
+import edu.gdou.equipmentmanage.bean.Ereservation;
+import edu.gdou.placemange.entity.PlaceApply;
+import edu.gdou.placemange.entity.PlaceAvailable;
+
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Match {
     String matchId;
     String matchName;
-    Timestamp matchTime;//
-    String matchPlace;//
-    String matchTools;//
+    String matchUsername;//赛事申请人名字
+    String matchRefereename;//裁判
+    String matchReviewername;//赛事审核人名字
     String matchType;
     String matchDescribe;
     String userId;
     String reviewerId;
     int refereeId;
     String status;
-
-    public Match(String matchId, String matchName, Timestamp matchTime, String matchPlace, String matchTools, String matchType, String matchDescribe, String userId, String reviewerId, int refereeId, String status) {
-        this.matchId = matchId;
-        this.matchName = matchName;
-        this.matchTime = matchTime;
-        this.matchPlace = matchPlace;
-        this.matchTools = matchTools;
-        this.matchType = matchType;
-        this.matchDescribe = matchDescribe;
-        this.userId = userId;
-        this.reviewerId = reviewerId;
-        this.refereeId = refereeId;
-        this.status = status;
-    }
+    List<PlaceAvailable> keepList;
+    List<PlaceApply> applyList;
+    List<Ereservation> ereservationList;
 
     public String getMatchId() {
         return matchId;
@@ -45,28 +39,28 @@ public class Match {
         this.matchName = matchName;
     }
 
-    public Timestamp getMatchTime() {
-        return matchTime;
+    public String getMatchUsername() {
+        return matchUsername;
     }
 
-    public void setMatchTime(Timestamp matchTime) {
-        this.matchTime = matchTime;
+    public void setMatchUsername(String matchUsername) {
+        this.matchUsername = matchUsername;
     }
 
-    public String getMatchPlace() {
-        return matchPlace;
+    public String getMatchRefereename() {
+        return matchRefereename;
     }
 
-    public void setMatchPlace(String matchPlace) {
-        this.matchPlace = matchPlace;
+    public void setMatchRefereename(String matchRefereename) {
+        this.matchRefereename = matchRefereename;
     }
 
-    public String getMatchTools() {
-        return matchTools;
+    public String getMatchReviewername() {
+        return matchReviewername;
     }
 
-    public void setMatchTools(String matchTools) {
-        this.matchTools = matchTools;
+    public void setMatchReviewername(String matchReviewername) {
+        this.matchReviewername = matchReviewername;
     }
 
     public String getMatchType() {
@@ -117,20 +111,47 @@ public class Match {
         this.status = status;
     }
 
+    public List<PlaceAvailable> getKeepList() {
+        return keepList;
+    }
+
+    public void setKeepList(List<PlaceAvailable> keepList) {
+        this.keepList = keepList;
+    }
+
+    public List<PlaceApply> getApplyList() {
+        return applyList;
+    }
+
+    public void setApplyList(List<PlaceApply> applyList) {
+        this.applyList = applyList;
+    }
+
+    public List<Ereservation> getEreservationList() {
+        return ereservationList;
+    }
+
+    public void setEreservationList(List<Ereservation> ereservationList) {
+        this.ereservationList = ereservationList;
+    }
+
     @Override
     public String toString() {
         return "Match{" +
                 "matchId='" + matchId + '\'' +
                 ", matchName='" + matchName + '\'' +
-                ", matchTime=" + matchTime +
-                ", matchPlace='" + matchPlace + '\'' +
-                ", matchTools='" + matchTools + '\'' +
+                ", matchUsername='" + matchUsername + '\'' +
+                ", matchRefereename='" + matchRefereename + '\'' +
+                ", matchReviewername='" + matchReviewername + '\'' +
                 ", matchType='" + matchType + '\'' +
                 ", matchDescribe='" + matchDescribe + '\'' +
                 ", userId='" + userId + '\'' +
                 ", reviewerId='" + reviewerId + '\'' +
                 ", refereeId=" + refereeId +
                 ", status='" + status + '\'' +
+                ", keepList=" + keepList +
+                ", applyList=" + applyList +
+                ", ereservationList=" + ereservationList +
                 '}';
     }
 }

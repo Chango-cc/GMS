@@ -213,8 +213,6 @@
                                     <th scope="col">场地楼层</th>
                                     <th scope="col">可用日期</th>
                                     <th scope="col">可用时间段</th>
-                                    <th scope="col">开始计时</th>
-                                    <th scope="col">结束计时</th>
 <!--                                    <th scope="col">操作</th>-->
                                 </tr>
                                 </thead>
@@ -225,8 +223,6 @@
                                     <td>{{item.placeStorey}}</td>
                                     <td>{{item.applyDate  | formatDate }}</td>
                                     <td>{{item.applyPeriod}}</td>
-                                    <td>{{item.applyStart}}</td>
-                                    <td>{{item.applyEnd}}</td>
 <!--                                    <td>-->
 <!--                                        <div  class="placeoption">-->
 <!--                                            <a href="#" class="badge badge-info"><i class="fa fa-toggle-off fa-2x" aria-hidden="true" :id="'in'+index" @click="setTime(item.applyId,index,item.applyStart,item.applyEnd,item.applyPeriod)"></i></a>-->
@@ -388,15 +384,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="pre" name="time" @click="settime('上周')">
+                            <input type="radio" class="custom-control-input" id="pre" name="time" @click="settimed('上周')">
                             <label class="custom-control-label" for="pre">上周</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="now" name="time" @click="settime('本周')" checked>
+                            <input type="radio" class="custom-control-input" id="now" name="time" @click="settimed('本周')" checked>
                             <label class="custom-control-label" for="now">本周</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="next" name="time" @click="settime('下周')">
+                            <input type="radio" class="custom-control-input" id="next" name="time" @click="settimed('下周')">
                             <label class="custom-control-label" for="next">下周</label>
                         </div>
                     </div>
